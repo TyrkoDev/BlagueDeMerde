@@ -1,0 +1,44 @@
+{
+  "name": "tsunamyProjectExemple",
+  "version": "0.0.5",
+  "description": "A typesript framework exemple",
+  "main": "main.ts",
+  "types": "lib/main",
+  "nodemonConfig": {
+    "ignoreRoot": [
+      ".git"
+    ]
+  },
+  "scripts": {
+    "start-prod": "ts-node -T src/main.ts",
+    "test": "jasmine-ts --config=jasmine.json",
+    "testWithCoverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" jasmine-ts --config=jasmine.json && nyc report",
+    "start": "npm run build:live",
+    "start-tsunamy": "npm run build:live:dev:tsunamy",
+    "build": "tsc -p .",
+    "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/main.ts",
+    "build:live:dev:tsunamy": "nodemon --watch 'src/**/*.ts' --watch '../tsunamy/core' --exec 'ts-node' src/main.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/apokalupsis"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^3.3.12",
+    "@types/node": "^11.13.0",
+    "jasmine": "^3.3.1",
+    "jasmine-ts": "^0.3.0",
+    "nodemon": "^1.18.10",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.1"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.4.0",
+    "tsunamy": "0.0.6"
+  }
+}
