@@ -37,6 +37,7 @@
     "typescript": "^3.4.1"
   },
   "dependencies": {
+    "@types/mongoose": "^5.3.26",
     "mongoose": "^5.5.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.4.0",
