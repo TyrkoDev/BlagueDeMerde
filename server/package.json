@@ -1,7 +1,7 @@
 {
-  "name": "tsunamyProjectExemple",
-  "version": "0.0.5",
-  "description": "A typesript framework exemple",
+  "name": "blagueDeMerdeBack",
+  "version": "0.0.1",
+  "description": "Serveur de l'appli blague de merde",
   "main": "main.ts",
   "types": "lib/main",
   "nodemonConfig": {
@@ -37,6 +37,7 @@
     "typescript": "^3.4.1"
   },
   "dependencies": {
+    "mongoose": "^5.5.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.4.0",
     "tsunamy": "0.0.6"
