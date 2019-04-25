@@ -1,8 +1,8 @@
-import { TsModule } from 'tsunamy/core';
+import { TyModule } from 'tsunamy/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-@TsModule({
+@TyModule({
   declarations: [AppController],
   providers: [AppService]
 })
