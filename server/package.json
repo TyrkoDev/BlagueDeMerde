@@ -11,6 +11,7 @@
   },
   "scripts": {
     "start-prod": "ts-node -T src/main.ts",
+    "lint": "tslint -p . -c tslint.json",
     "test": "jasmine-ts --config=jasmine.json",
     "testWithCoverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" jasmine-ts --config=jasmine.json && nyc report",
     "start": "npm run build:live",

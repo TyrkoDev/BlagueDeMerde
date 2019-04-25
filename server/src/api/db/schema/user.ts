@@ -1,8 +1,9 @@
-import {Document, Schema, Model, model} from "mongoose";
-import { IUser } from "./interface/iUser";
+import {Document, Schema, Model, model} from 'mongoose';
+import {IUser} from './interface/iUser';
 
 export interface IUserModel extends IUser, Document {
     hello(): string;
+
     create(user: IUser): void;
 }
 
@@ -16,11 +17,11 @@ export const UserSchema: Schema = new Schema({
 });
 
 UserSchema.methods.hello = function(): string {
-    return (this.firstName.trim() + " " + this.name.trim());
+    return (this.firstName.trim() + ' ' + this.name.trim());
 };
 
-UserSchema.methods.create = function(user: IUser): void {
+UserSchema.methods.create = (user: IUser): void => {
     console.log(user);
 };
 
-export const User: Model<IUserModel> = model<IUserModel>("User", UserSchema);
+export const User: Model<IUserModel> = model<IUserModel>('User', UserSchema);

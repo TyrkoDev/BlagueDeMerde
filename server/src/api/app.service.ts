@@ -1,25 +1,26 @@
-import { Controller, Injectable } from 'tsunamy/core';
+import {Injectable} from 'tsunamy/core';
 import {User} from './db/schema/user';
 
 @Injectable()
 export class AppService {
 
-  constructor() {}
+    constructor() {
+    }
 
-  hi(): string {
-    return 'Tsunamy';
-  }
+    hi(): string {
+        return 'Tsunamy';
+    }
 
-  test(): string {
-    let user = new User();
-    user.create({
-      name: "Test",
-      firstName: "Test",
-      password: "Test",
-      email: "test@test.test",
-      pseudo: "Test",
-      idEquipe: 1
-    });
-    return "Yo";
-  }
+    test(): string {
+        const user = new User();
+        user.create({
+            name: 'Test',
+            firstName: 'Test',
+            password: 'Test',
+            email: 'test@test.test',
+            pseudo: 'Test',
+            idEquipe: 1
+        });
+        return 'Yo';
+    }
 }
