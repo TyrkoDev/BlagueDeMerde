@@ -1,4 +1,5 @@
 import { Controller, Injectable } from 'tsunamy/core';
+import {User} from './db/schema/user';
 
 @Injectable()
 export class AppService {
@@ -7,5 +8,18 @@ export class AppService {
 
   hi(): string {
     return 'Tsunamy';
+  }
+
+  test(): string {
+    let user = new User();
+    user.create({
+      name: "Test",
+      firstName: "Test",
+      password: "Test",
+      email: "test@test.test",
+      pseudo: "Test",
+      idEquipe: 1
+    });
+    return "Yo";
   }
 }

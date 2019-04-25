@@ -20,4 +20,9 @@ export class AppController {
   error() {
     return {error: 4000, message: 'error'};
   }
+
+  @RequestMapping({ path: '/test', method: 'GET'})
+  test() {
+    return this.appservice.test();
+  }
 }
