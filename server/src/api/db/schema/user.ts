@@ -8,20 +8,17 @@ export interface IUserModel extends IUser, Document {
 }
 
 export const UserSchema: Schema = new Schema({
+    createdAt: Date,
     name: String,
     firstName: String,
     password: String,
     email: String,
     pseudo: String,
-    idEquipe: Number
+    idTeam: Number
 });
 
 UserSchema.methods.hello = function(): string {
     return (this.firstName.trim() + ' ' + this.name.trim());
-};
-
-UserSchema.methods.create = (user: IUser): void => {
-    console.log(user);
 };
 
 export const User: Model<IUserModel> = model<IUserModel>('User', UserSchema);

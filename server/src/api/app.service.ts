@@ -14,12 +14,13 @@ export class AppService {
     test(): string {
         const user = new User();
         user.create({
+            createdAt: new Date(),
             name: 'Test',
             firstName: 'Test',
             password: 'Test',
             email: 'test@test.test',
             pseudo: 'Test',
-            idEquipe: 1
+            idTeam: 1
         });
         return 'Yo';
     }

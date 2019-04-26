@@ -1,8 +1,9 @@
 export interface IUser {
+    createdAt: Date,
     name: string;
     firstName: string;
     password: string;
     email: string;
     pseudo: string;
-    idEquipe: number;
+    idTeam: number;
 }
