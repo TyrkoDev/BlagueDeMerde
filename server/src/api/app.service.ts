@@ -1,19 +1,8 @@
-import {Injectable, Console} from 'tsunamy/core';
-import {User} from './db/schema/user';
-import mongoose from 'mongoose';
+import {Injectable} from 'tsunamy/core';
+import {User} from './mongo/schema/user';
 
 @Injectable()
 export class AppService {
-
-    constructor() {
-        mongoose.connect('mongodb://localhost:27017/bdm', {useNewUrlParser: true}).then((value: any) => {
-            if (value) {
-                Console.Info('Connected to db : ' + value.connections[0].name);
-            } else {
-                Console.Err('Connection error');
-            }
-        }).catch((err: any) => Console.Err(err));
-    }
 
     hi(): string {
         return 'Tsunamy';
