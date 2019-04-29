@@ -23,6 +23,6 @@ export class AppController {
 
   @RequestMapping({ path: '/test', method: 'GET'})
   test() {
-    return this.appservice.test();
+    return this.appservice.create();
   }
 }

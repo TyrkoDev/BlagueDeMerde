@@ -1,19 +1,26 @@
-import {Injectable} from 'tsunamy/core';
+import {Injectable, Console} from 'tsunamy/core';
 import {User} from './db/schema/user';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class AppService {
 
     constructor() {
+        mongoose.connect('mongodb://localhost:27017/bdm', {useNewUrlParser: true}).then((value: any) => {
+            if (value) {
+                Console.Info('Connected to db : ' + value.connections[0].name);
+            } else {
+                Console.Err('Connection error');
+            }
+        }).catch((err: any) => Console.Err(err));
     }
 
     hi(): string {
         return 'Tsunamy';
     }
 
-    test(): string {
-        const user = new User();
-        user.create({
+    create(): string {
+        const user = new User({
             createdAt: new Date(),
             name: 'Test',
             firstName: 'Test',
@@ -22,6 +29,8 @@ export class AppService {
             pseudo: 'Test',
             idTeam: 1
         });
-        return 'Yo';
+
+        user.create();
+        return 'Created';
     }
 }

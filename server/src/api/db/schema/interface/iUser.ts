@@ -1,5 +1,5 @@
 export interface IUser {
-    createdAt: Date,
+    createdAt: Date;
     name: string;
     firstName: string;
     password: string;
