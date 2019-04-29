@@ -1,5 +1,7 @@
 import {Injectable} from 'tsunamy/core';
 import {User} from './mongo/schema/user';
+import {Team} from './mongo/schema/team';
+import {Vote} from './mongo/schema/vote';
 
 @Injectable()
 export class AppService {
@@ -8,7 +10,7 @@ export class AppService {
         return 'Tsunamy';
     }
 
-    create(): string {
+    createUser(): string {
         const user = new User({
             createdAt: new Date(),
             name: 'Test',
@@ -20,6 +22,27 @@ export class AppService {
         });
 
         user.create();
+        return 'Created';
+    }
+
+    createVote(): string {
+        const vote = new Vote({
+            idVoter: 1,
+            idTargetUser: 2,
+            dateVote: new Date()
+        });
+
+        vote.vote();
+        return 'Created';
+    }
+
+    createTeam(): string {
+        const team = new Team({
+            createdAt: new Date(),
+            name: 'Thug team'
+        });
+
+        team.create();
         return 'Created';
     }
 }

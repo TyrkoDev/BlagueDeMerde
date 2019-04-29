@@ -21,8 +21,18 @@ export class AppController {
     return {error: 4000, message: 'error'};
   }
 
-  @RequestMapping({ path: '/test', method: 'GET'})
-  test() {
-    return this.appservice.create();
+  @RequestMapping({ path: '/test-user', method: 'GET'})
+  testUser() {
+    return {status: this.appservice.createUser()};
+  }
+
+  @RequestMapping({ path: '/test-vote', method: 'GET'})
+  testVote() {
+    return {status: this.appservice.createVote()};
+  }
+
+  @RequestMapping({ path: '/test-team', method: 'GET'})
+  testTeam() {
+    return {status: this.appservice.createTeam()};
   }
 }
