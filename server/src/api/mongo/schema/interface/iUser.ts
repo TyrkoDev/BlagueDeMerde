@@ -1,3 +1,5 @@
+import {ITeam} from './iTeam';
+
 export interface IUser {
     createdAt: Date;
     name: string;
@@ -5,5 +7,5 @@ export interface IUser {
     password: string;
     email: string;
     pseudo: string;
-    idTeam: number;
+    team: ITeam;
 }

@@ -1,5 +1,7 @@
+import {IUser} from './iUser';
+
 export interface IVote {
-    idVoter: number;
-    idTargetUser: number;
+    voter: IUser;
+    targetUser: IUser;
     dateVote: Date;
 }

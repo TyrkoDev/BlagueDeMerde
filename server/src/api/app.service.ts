@@ -2,6 +2,7 @@ import {Injectable} from 'tsunamy/core';
 import {User} from './mongo/schema/user';
 import {Team} from './mongo/schema/team';
 import {Vote} from './mongo/schema/vote';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class AppService {
@@ -13,26 +14,34 @@ export class AppService {
     createUser(): string {
         const user = new User({
             createdAt: new Date(),
-            name: 'Test',
-            firstName: 'Test',
-            password: 'Test',
+            name: 'Thug',
+            firstName: 'Driss',
+            password: 'test',
             email: 'test@test.test',
-            pseudo: 'Test',
-            idTeam: 1
+            pseudo: 'Drisette',
         });
 
+        const team = new Team({
+            createdAt: new Date(),
+                name: 'Les bandits'
+        });
+        team.create();
+
+        user.team = team;
         user.create();
         return 'Created';
     }
 
     createVote(): string {
-        const vote = new Vote({
-            idVoter: 1,
-            idTargetUser: 2,
-            dateVote: new Date()
+        User.findOne({pseudo: 'Drisette'}, function (error: any, user: any) {
+            const vote = new Vote({
+                dateVote: new Date()
+            });
+
+            vote.voter = user;
+            vote.vote();
         });
 
-        vote.vote();
         return 'Created';
     }
 

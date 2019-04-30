@@ -8,8 +8,8 @@ export interface IVoteModel extends IVote, Document {
 }
 
 export const VoteSchema: Schema = new Schema({
-    idVoter: Number,
-    idTargetUser: Number,
+    voter: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    targetUser: [{type: Schema.Types.ObjectId, ref: 'User'}],
     dateVote: Date
 });
 

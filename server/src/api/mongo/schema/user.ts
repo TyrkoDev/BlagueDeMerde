@@ -14,7 +14,7 @@ export const UserSchema: Schema = new Schema({
     password: String,
     email: String,
     pseudo: String,
-    idTeam: Number
+    idTeam: [{type: Schema.Types.ObjectId, ref: 'Team'}]
 });
 
 UserSchema.methods.hello = function(): string {
