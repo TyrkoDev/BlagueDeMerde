@@ -40,9 +40,9 @@ export class UserController {
         return {user: this.userService.getUser(id)};
     }
 
-    @RequestMapping({ path: '/user/users/{param}', method: 'GET'})
-    getUsers(@PathParam('param') param: any) {
-        return {users: this.userService.getUsers(param)};
+    @RequestMapping({ path: '/user/users/{id-team}', method: 'GET'})
+    getUsers(@PathParam('id-team') idTeam: any) {
+        return {users: this.userService.getUsersByIdTeam(idTeam)};
     }
 
     @RequestMapping({ path: '/user/update', method: 'PUT'})

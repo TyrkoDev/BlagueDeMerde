@@ -6,7 +6,8 @@ import {IUserModel, User} from '../mongo/schema/user';
 export class UserService {
     hi(): any {
         return {
-            controller: 'User'
+            controller: 'User',
+            methods: Object.getOwnPropertyNames(UserService.prototype)
         };
     }
 
@@ -17,8 +18,11 @@ export class UserService {
         }).catch(reason => Console.Err(reason));
     }
 
-    update(user: IUser): boolean {
-        return true;
+    async update(user: IUser): Promise<IUserModel | void> {
+        return await User.updateOne({email: user.email}, user).then((res: IUserModel) => {
+            Console.Info('User updated : ' + res.pseudo);
+            return res;
+        }).catch(reason => Console.Err(reason));
     }
 
     async getUser(id: any): Promise<IUserModel | null> {
@@ -34,12 +38,25 @@ export class UserService {
         });
     }
 
-    getUsers(param: any): IUser[] {
-        return [];
+    async getUsersByIdTeam(idTeam: any): Promise<IUserModel[] | null> {
+        return await User.find({idTeam}, function(err: any, res: any[]) {
+            if (err) {
+                Console.Err('Team users not found : ' + idTeam);
+            }
+
+            if (res) {
+                Console.Info('Users found : ' + res.length);
+            }
+            return res;
+        });
     }
 
-    delete(id: any): boolean {
-        return false;
+    delete(id: any): void {
+        User.deleteOne({_id: id}, function(err: any) {
+            if (err) {
+                Console.Err('User not found : ' + id);
+            }
+        });
     }
 
     authenticate(): boolean {
