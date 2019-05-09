@@ -1,7 +1,7 @@
 import {ITeam} from './iTeam';
+import {InterfaceDTO} from '../../../core/interface/InterfaceDTO';
 
-export interface IUser {
-    createdAt: Date;
+export interface IUser extends InterfaceDTO {
     name: string;
     firstName: string;
     password: string;

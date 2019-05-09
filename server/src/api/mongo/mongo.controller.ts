@@ -15,7 +15,7 @@ export class MongoController {
         }).catch((err: any) => Console.Err(err));
     }
 
-    @RequestMapping({ path: '/mongo/service', method: 'GET'})
+    @RequestMapping({ path: '/mongo/controller', method: 'GET'})
     hi(): any {
         return {hello: this.mongoservice.hi()};
     }

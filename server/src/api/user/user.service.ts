@@ -4,12 +4,6 @@ import {IUserModel, User} from '../mongo/schema/user';
 
 @Injectable()
 export class UserService {
-    hi(): any {
-        return {
-            controller: 'User',
-            methods: Object.getOwnPropertyNames(UserService.prototype)
-        };
-    }
 
     async create(user: IUser): Promise<IUserModel | void> {
         return await User.create(user).then((res: IUserModel) => {
@@ -51,7 +45,7 @@ export class UserService {
         });
     }
 
-    delete(id: any): void {
+    delete(id: string): void {
         User.deleteOne({_id: id}, function(err: any) {
             if (err) {
                 Console.Err('User not found : ' + id);

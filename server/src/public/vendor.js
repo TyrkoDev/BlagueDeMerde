@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
  * The `PlatformLocation` class is used directly by all implementations of {@link LocationStrategy}
  * when they need to interact with the DOM apis like pushState, popState, etc...
  *
- * {@link LocationStrategy} in turn is used by the {@link Location} service which is used directly
+ * {@link LocationStrategy} in turn is used by the {@link Location} controller which is used directly
  * by the {@link Router} in order to navigate between routes. Since all interactions between {@link
  * Router} /
  * {@link Location} / {@link LocationStrategy} and DOM apis flow through the `PlatformLocation`
@@ -166,7 +166,7 @@ var LOCATION_INITIALIZED = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injec
  * from the browser's URL. Angular provides two strategies:
  * {@link HashLocationStrategy} and {@link PathLocationStrategy}.
  *
- * This is used under the hood of the {@link Location} service.
+ * This is used under the hood of the {@link Location} controller.
  *
  * Applications should use the {@link Router} or {@link Location} services to
  * interact with application route state.
@@ -219,14 +219,14 @@ var APP_BASE_HREF = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionTok
 /**
  * @description
  *
- * A service that applications can use to interact with a browser's URL.
+ * A controller that applications can use to interact with a browser's URL.
  *
  * Depending on the {@link LocationStrategy} used, `Location` will either persist
  * to the URL's path or the URL's hash segment.
  *
  * @usageNotes
  *
- * It's better to use the {@link Router#navigate} service to trigger route changes. Use
+ * It's better to use the {@link Router#navigate} controller to trigger route changes. Use
  * `Location` only if you need to interact with or create normalized URLs outside of
  * routing.
  *
@@ -443,7 +443,7 @@ function _stripIndexHtml(url) {
  */
 /**
  * @description
- * A {@link LocationStrategy} used to configure the {@link Location} service to
+ * A {@link LocationStrategy} used to configure the {@link Location} controller to
  * represent its state in the
  * [hash fragment](https://en.wikipedia.org/wiki/Uniform_Resource_Locator#Syntax)
  * of the browser's URL.
@@ -521,7 +521,7 @@ var HashLocationStrategy = /** @class */ (function (_super) {
  */
 /**
  * @description
- * A {@link LocationStrategy} used to configure the {@link Location} service to
+ * A {@link LocationStrategy} used to configure the {@link Location} controller to
  * represent its state in the
  * [path](https://en.wikipedia.org/wiki/Uniform_Resource_Locator#Syntax) of the
  * browser's URL.
@@ -3437,7 +3437,7 @@ var NgForOf = /** @class */ (function () {
         get: function () { return this._trackByFn; },
         set: function (fn) {
             if (Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["isDevMode"])() && fn != null && typeof fn !== 'function') {
-                // TODO(vicb): use a log service once there is a public one available
+                // TODO(vicb): use a log controller once there is a public one available
                 if (console && console.warn) {
                     console.warn("trackBy must be a function, but received " + JSON.stringify(fn) + ". " +
                         "See https://angular.io/docs/ts/latest/api/common/index/NgFor-directive.html#!#change-propagation for more information.");
@@ -23221,7 +23221,7 @@ var _Visitor$2 = /** @class */ (function () {
                     if (!i18nCommentsWarned && console && console.warn) {
                         i18nCommentsWarned = true;
                         var details = comment.sourceSpan.details ? ", " + comment.sourceSpan.details : '';
-                        // TODO(ocombe): use a log service once there is a public one available
+                        // TODO(ocombe): use a log controller once there is a public one available
                         console.warn("I18n comments are deprecated, use an <ng-container> element instead (" + comment.sourceSpan.start + details + ")");
                     }
                     this._inI18nBlock = true;
@@ -31676,7 +31676,7 @@ var StaticReflector = /** @class */ (function () {
                                     if (staticSymbol === self.injectionToken || staticSymbol === self.opaqueToken) {
                                         // if somebody calls new InjectionToken, don't create an InjectionToken,
                                         // but rather return the symbol to which the InjectionToken is assigned to.
-                                        // OpaqueToken is supported too as it is required by the language service to
+                                        // OpaqueToken is supported too as it is required by the language controller to
                                         // support v4 and prior versions of Angular.
                                         return context;
                                     }
@@ -36653,7 +36653,7 @@ function searchTokensOnInjector(injectorIndex, lView, token, previousTView, flag
         // to look into the ViewProviders is if:
         // - we are on a component
         // - AND the injector set `includeViewProviders` to true (implying that the token can see
-        // ViewProviders because it is the Component or a Service which itself was declared in
+        // ViewProviders because it is the Component or a Controller which itself was declared in
         // ViewProviders)
         (isComponent(tNode) && includeViewProviders) :
         // 2) `previousTView != null` which means that we are now walking across the parent nodes.
@@ -44657,9 +44657,9 @@ var Renderer = /** @class */ (function () {
 }());
 var Renderer2Interceptor = new InjectionToken('Renderer2Interceptor');
 /**
- * Injectable service that provides a low-level interface for modifying the UI.
+ * Injectable controller that provides a low-level interface for modifying the UI.
  *
- * Use this service to bypass Angular's templating and make custom UI changes that can't be
+ * Use this controller to bypass Angular's templating and make custom UI changes that can't be
  * expressed declaratively. For example if you need to set a property or an attribute whose name is
  * not statically known, use {@link Renderer#setElementProperty setElementProperty} or
  * {@link Renderer#setElementAttribute setElementAttribute} respectively.
@@ -50925,7 +50925,7 @@ var Compiler_compileModuleAndAllComponentsAsync__POST_R3__ = function (moduleTyp
 };
 var Compiler_compileModuleAndAllComponentsAsync = Compiler_compileModuleAndAllComponentsAsync__PRE_R3__;
 /**
- * Low-level service for running the angular compiler during runtime
+ * Low-level controller for running the angular compiler during runtime
  * to create {@link ComponentFactory}s, which
  * can later be used to create and render a Component instance.
  *
@@ -51109,9 +51109,9 @@ var wtfEndTimeRange = wtfEnabled ? endTimeRange : function (r) { return null; };
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * An injectable service for executing work inside or outside of the Angular zone.
+ * An injectable controller for executing work inside or outside of the Angular zone.
  *
- * The most common use of this service is to optimize performance when starting a work consisting of
+ * The most common use of this controller is to optimize performance when starting a work consisting of
  * one or more asynchronous tasks that don't require UI updates or error handling to be handled by
  * Angular. Such tasks can be kicked off via {@link #runOutsideAngular} and if needed, these tasks
  * can reenter the Angular zone via {@link #run}.
@@ -51406,7 +51406,7 @@ var NoopNgZone = /** @class */ (function () {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * The Testability service provides testing hooks that can be accessed from
+ * The Testability controller provides testing hooks that can be accessed from
  * the browser and by services such as Protractor. Each bootstrapped Angular
  * application on the page will have an instance of Testability.
  * @publicApi
@@ -59900,20 +59900,20 @@ var ELEMENT_PROBE_PROVIDERS = [
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * The injection token for the event-manager plug-in service.
+ * The injection token for the event-manager plug-in controller.
  *
  * @publicApi
  */
 var EVENT_MANAGER_PLUGINS = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["InjectionToken"]('EventManagerPlugins');
 /**
- * An injectable service that provides event management for Angular
+ * An injectable controller that provides event management for Angular
  * through a browser plug-in.
  *
  * @publicApi
  */
 var EventManager = /** @class */ (function () {
     /**
-     * Initializes an instance of the event-manager service.
+     * Initializes an instance of the event-manager controller.
      */
     function EventManager(plugins, _zone) {
         var _this = this;
@@ -61113,13 +61113,13 @@ var BrowserModule = /** @class */ (function () {
 }());
 
 /**
- * Factory to create Meta service.
+ * Factory to create Meta controller.
  */
 function createMeta() {
     return new Meta(Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["inject"])(DOCUMENT$1));
 }
 /**
- * A service that can be used to get and add meta tags.
+ * A controller that can be used to get and add meta tags.
  *
  * @publicApi
  */
@@ -61213,17 +61213,17 @@ var Meta = /** @class */ (function () {
 }());
 
 /**
- * Factory to create Title service.
+ * Factory to create Title controller.
  */
 function createTitle() {
     return new Title(Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["inject"])(DOCUMENT$1));
 }
 /**
- * A service that can be used to get and set the title of a current HTML document.
+ * A controller that can be used to get and set the title of a current HTML document.
  *
  * Since an Angular application can't be bootstrapped on the entire HTML document (`<html>` tag)
  * it is not possible to bind to the `text` property of the `HTMLTitleElement` elements
- * (representing the `<title>` tag). Instead, this service can be used to set and get the current
+ * (representing the `<title>` tag). Instead, this controller can be used to set and get the current
  * title value.
  *
  * @publicApi

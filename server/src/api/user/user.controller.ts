@@ -2,15 +2,18 @@ import {RequestMapping, PathParam, Controller, Body, Console} from 'tsunamy/core
 import { UserService } from './user.service';
 import {IUser} from '../mongo/schema/interface/iUser';
 import {IUserModel} from '../mongo/schema/user';
+import {ControllerUsine} from '../core/controller/controllerUsine';
 
 @Controller()
-export class UserController {
+export class UserController extends ControllerUsine {
 
-    constructor( private userService: UserService) { }
+    constructor( private userService: UserService) {
+        super(UserController);
+    }
 
     @RequestMapping({ path: '/user/hi', method: 'GET'})
     hi() {
-        return this.userService.hi();
+        return super.hi();
     }
 
     @RequestMapping({ path: '/user/create', method: 'POST'})

@@ -3,10 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongoModule } from './mongo/mongo.module';
 import { UserModule } from './user/user.module';
+import { TeamModule } from './team/team.module';
 
 @TyModule({
   declarations: [AppController],
   providers: [AppService],
-  imports: [MongoModule, UserModule]
+  imports: [MongoModule, UserModule, TeamModule]
 })
 export class AppModule { }
