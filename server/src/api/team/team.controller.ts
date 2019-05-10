@@ -2,10 +2,10 @@ import {RequestMapping, PathParam, Controller, Body, Console} from 'tsunamy/core
 import {TeamService} from './team.service';
 import {ITeam} from '../mongo/schema/interface/iTeam';
 import {ITeamModel} from '../mongo/schema/team';
-import {ControllerUsine} from '../core/controller/controllerUsine';
+import {ControllerTemplate} from '../core/controller/controllerTemplate';
 
 @Controller()
-export class TeamController extends ControllerUsine {
+export class TeamController extends ControllerTemplate {
 
     constructor( private teamService: TeamService) {
         super(TeamController);

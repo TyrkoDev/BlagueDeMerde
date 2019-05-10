@@ -2,10 +2,10 @@ import {RequestMapping, PathParam, Controller, Body, Console} from 'tsunamy/core
 import { UserService } from './user.service';
 import {IUser} from '../mongo/schema/interface/iUser';
 import {IUserModel} from '../mongo/schema/user';
-import {ControllerUsine} from '../core/controller/controllerUsine';
+import {ControllerTemplate} from '../core/controller/controllerTemplate';
 
 @Controller()
-export class UserController extends ControllerUsine {
+export class UserController extends ControllerTemplate {
 
     constructor( private userService: UserService) {
         super(UserController);

@@ -1,6 +1,4 @@
-import {InterfaceDTO} from '../interface/InterfaceDTO';
-
-export abstract class ControllerUsine {
+export abstract class ControllerTemplate {
     private serviceDefinition: any;
 
     protected constructor(serviceDefinition: any) {
@@ -13,8 +11,4 @@ export abstract class ControllerUsine {
             methods: Object.getOwnPropertyNames(this.serviceDefinition.prototype)
         };
     }
-
-    abstract create(dto: InterfaceDTO): void;
-    abstract update(dto: InterfaceDTO): void;
-    abstract delete(id: string): void;
 }
