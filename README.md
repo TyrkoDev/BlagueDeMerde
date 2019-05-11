@@ -1,1 +1,2 @@
-# projet de compteur de blague de merde
+# Projet de compteur de blague de merde
+- Jenkins build : OK
