@@ -6,10 +6,9 @@ import {DeleteWriteOpResultObject} from 'mongodb';
 @Injectable()
 export class TeamService {
 
-    async create(team: ITeam): Promise<ITeamModel | void> {
-        return await Team.create(team).then((res: ITeamModel) => {
+    async create(team: ITeam): Promise<void> {
+        await Team.create(team).then((res: ITeamModel) => {
             Console.Info('Team created : ' + res.name);
-            return res;
         }).catch(reason => Console.Err(reason));
     }
 

@@ -17,7 +17,8 @@ export class TeamController extends ControllerTemplate {
 
     @RequestMapping({ path: '/team/create', method: 'POST'})
     async create(@Body() team: ITeam) {
-        return {team: await this.teamService.create(team)};
+        await this.teamService.create(team);
+        return {code: 201};
     }
 
     @RequestMapping({ path: '/team/{id}', method: 'GET'})

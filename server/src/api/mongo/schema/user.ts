@@ -1,33 +1,26 @@
 import {Document, Schema, Model, model} from 'mongoose';
 import {IUser} from './interface/iUser';
-import {Console} from 'tsunamy/core';
+import {Team} from './team';
 
 export interface IUserModel extends IUser, Document {
     hello(): string;
-    create(): void;
 }
 
 export const UserSchema: Schema = new Schema({
-    createdAt: Date,
+    createdAt: { type: Date, default: Date.now },
     name: String,
     firstName: String,
     password: String,
     email: String,
     pseudo: String,
-    idTeam: [{type: Schema.Types.ObjectId, ref: 'Team'}]
+    team: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Team'
+    }]
 });
 
 UserSchema.methods.hello = function(): string {
     return (this.firstName.trim() + ' ' + this.name.trim());
-};
-
-UserSchema.methods.create = function(): void {
-    this.save((err: any) => {
-        if (err) {
-            console.log(err);
-        }
-        Console.Info('Creation success');
-    });
 };
 
 export const User: Model<IUserModel> = model<IUserModel>('user', UserSchema);
