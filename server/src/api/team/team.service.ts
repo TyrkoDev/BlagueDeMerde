@@ -1,6 +1,7 @@
 import {Console, Injectable} from 'tsunamy/core';
 import {ITeam} from '../mongo/schema/interface/iTeam';
 import {ITeamModel, Team} from '../mongo/schema/team';
+import {DeleteWriteOpResultObject} from 'mongodb';
 
 @Injectable()
 export class TeamService {
@@ -25,8 +26,8 @@ export class TeamService {
         });
     }
 
-    delete(id: string): void {
-        Team.deleteOne({_id: id}, function(err: any) {
+    async delete(id: string): Promise<DeleteWriteOpResultObject['result']> {
+        return await Team.deleteOne({_id: id}, function(err: any) {
             if (err) {
                 Console.Err('Team not found : ' + id);
             }

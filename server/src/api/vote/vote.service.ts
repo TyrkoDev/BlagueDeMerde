@@ -1,6 +1,7 @@
 import {Console, Injectable} from 'tsunamy/core';
 import {IVote} from '../mongo/schema/interface/iVote';
 import {IVoteModel, Vote} from '../mongo/schema/vote';
+import {DeleteWriteOpResultObject} from 'mongodb';
 
 @Injectable()
 export class VoteService {
@@ -34,8 +35,8 @@ export class VoteService {
         });
     }
 
-    delete(id: string): void {
-        Vote.deleteOne({_id: id}, function(err: any) {
+    async delete(id: string): Promise<DeleteWriteOpResultObject['result']> {
+        return await Vote.deleteOne({_id: id}, function(err: any) {
             if (err) {
                 Console.Err('Vote not found : ' + id);
             }

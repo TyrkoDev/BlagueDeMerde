@@ -1,6 +1,7 @@
 import {Console, Injectable} from 'tsunamy/core';
 import {IUser} from '../mongo/schema/interface/iUser';
 import {IUserModel, User} from '../mongo/schema/user';
+import {DeleteWriteOpResultObject} from 'mongodb';
 
 @Injectable()
 export class UserService {
@@ -45,8 +46,8 @@ export class UserService {
         });
     }
 
-    delete(id: string): void {
-        User.deleteOne({_id: id}, function(err: any) {
+    async delete(id: string): Promise<DeleteWriteOpResultObject['result']> {
+        return await User.deleteOne({_id: id}, function(err: any) {
             if (err) {
                 Console.Err('User not found : ' + id);
             }
