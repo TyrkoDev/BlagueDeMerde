@@ -17,7 +17,8 @@ export class UserController extends ControllerTemplate {
 
     @RequestMapping({ path: '/user/create', method: 'POST'})
     async create(@Body() user: IUser) {
-        return {user: await this.userService.create(user)};
+        await this.userService.create(user);
+        return {code: 201};
     }
 
     @RequestMapping({ path: '/user/{id}', method: 'GET'})
@@ -31,18 +32,12 @@ export class UserController extends ControllerTemplate {
     }
 
     @RequestMapping({ path: '/user/update', method: 'PUT'})
-    async update(@Body('user') user: IUser) {
+    async update(@Body() user: IUser) {
         return {success: await this.userService.update(user)};
     }
 
     @RequestMapping({ path: '/user/delete/{id}', method: 'DELETE'})
     async delete(@PathParam('id') id: any) {
         return {success: await this.userService.delete(id)};
-    }
-
-    @RequestMapping({ path: '/user/authenticate', method: 'POST'})
-    authenticate() {
-        // TODO : Drissette :^)
-        return this.userService.authenticate();
     }
 }

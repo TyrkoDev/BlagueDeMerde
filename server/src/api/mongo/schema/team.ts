@@ -8,7 +8,7 @@ export interface ITeamModel extends ITeam, Document {
 }
 
 export const TeamSchema: Schema = new Schema({
-    createdAt: Date,
+    createdAt: { type: Date, default: Date.now },
     name: String
 });
 

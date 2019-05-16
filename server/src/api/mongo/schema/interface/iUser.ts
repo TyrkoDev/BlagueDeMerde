@@ -7,5 +7,5 @@ export interface IUser extends InterfaceDTO {
     password: string;
     email: string;
     pseudo: string;
-    team: ITeam;
+    team: ITeam[];
 }

@@ -44,6 +44,6 @@
     "mongoose": "^5.5.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.4.0",
-    "tsunamy": "0.0.9"
+    "tsunamy": "0.0.10"
   }
 }
