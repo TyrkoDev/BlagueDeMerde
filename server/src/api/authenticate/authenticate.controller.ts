@@ -1,4 +1,4 @@
-import {Body, Console, Controller, RequestMapping} from 'tsunamy/core';
+import {Body, Controller, RequestMapping} from 'tsunamy/core';
 import {AuthenticateService} from './authenticate.service';
 import {ControllerTemplate} from '../core/controller/controllerTemplate';
 import {AuthenticateEntity} from './models/authenticate-entity';

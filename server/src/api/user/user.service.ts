@@ -3,12 +3,20 @@ import {IUser} from '../mongo/schema/interface/iUser';
 import {IUserModel, User} from '../mongo/schema/user';
 import {DeleteWriteOpResultObject} from 'mongodb';
 import {AuthenticateService} from '../authenticate/authenticate.service';
-import {Team} from '../mongo/schema/team';
 
 @Injectable()
 export class UserService {
 
     async create(user: IUser): Promise<void> {
+        // check if user already exist
+        Console.Info('Check if user already exist');
+        const isPresent = await this.userExist(user);
+
+        if (isPresent) {
+            Console.Err('User already exist');
+            throw new Error('User already exist');
+        }
+
         user.password = await AuthenticateService.hashPassword(user.password)
             .then((res: string | void) => {
                 if (!res) {
@@ -17,17 +25,22 @@ export class UserService {
                 }
                 return res;
             });
-        const userModel: IUserModel | void = await User.create(user).then((res: IUserModel) => {
+        await User.create(user).then((res: IUserModel) => {
             Console.Info('User created : ' + res.pseudo);
-            Console.Info(res.toString());
-            return res;
         }).catch(reason => {
-            Console.Info('Coucou');
             Console.Err(reason);
         });
-        Team.populate(userModel, {path: 'team'}, function(err, res: IUserModel) {
-            Console.Info(userModel !== undefined ? userModel.toString() : '');
-        });
+        // const userModel: IUserModel | void = await User.create(user).then((res: IUserModel) => {
+        //     Console.Info('User created : ' + res.pseudo);
+        //     Console.Info(res.toString());
+        //     return res;
+        // }).catch(reason => {
+        //     Console.Info('Coucou');
+        //     Console.Err(reason);
+        // });
+        // Team.populate(userModel, {path: 'team'}, function(err, res: IUserModel) {
+        //     Console.Info(userModel !== undefined ? userModel.toString() : '');
+        // });
     }
 
     async update(user: IUser): Promise<IUserModel | void> {
@@ -69,5 +82,16 @@ export class UserService {
                 Console.Err('User not found : ' + id);
             }
         });
+    }
+
+    private async userExist(user: IUser): Promise<boolean> {
+        const userFind = await User.findOne().or([{pseudo: user.pseudo}, {email: user.email}])
+            .then((resp: IUserModel | null) => resp)
+            .catch((err: any) => Console.Err(err));
+
+        if (userFind) {
+            return new Promise<boolean>(resolve => resolve(true));
+        }
+        return new Promise<boolean>(resolve => resolve(false));
     }
 }

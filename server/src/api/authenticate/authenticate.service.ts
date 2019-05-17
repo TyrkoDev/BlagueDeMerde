@@ -11,11 +11,12 @@ export class AuthenticateService {
     static async hashPassword(password: string): Promise<string | void> {
         Console.Info('Hash du mot de passe');
         return await argon2.hash(password, {hashLength: 50, timeCost: 5})
-            .catch(err => Console.Err('Erreur lors du hash du mot de passe ! \n' + err));
+            .catch(err => Console.Err('Erreur lors du hash du mot de passe ! ' + err));
     }
 
-    async comparePassword(password: string, hash: string): Promise<string | null> {
-        return null;
+    async comparePassword(password: string, hash: string): Promise<boolean> {
+        Console.Info('Verification du mot de passe');
+        return await argon2.verify(hash, password);
     }
 
     async authentication(authenticateEntity: AuthenticateEntity): Promise<string | null> {

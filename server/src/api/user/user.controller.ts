@@ -1,4 +1,4 @@
-import {RequestMapping, PathParam, Controller, Body} from 'tsunamy/core';
+import {RequestMapping, PathParam, Controller, Body, Console} from 'tsunamy/core';
 import { UserService } from './user.service';
 import {IUser} from '../mongo/schema/interface/iUser';
 import {ControllerTemplate} from '../core/controller/controllerTemplate';
@@ -17,8 +17,13 @@ export class UserController extends ControllerTemplate {
 
     @RequestMapping({ path: '/user/create', method: 'POST'})
     async create(@Body() user: IUser) {
-        await this.userService.create(user);
-        return {code: 201};
+        try {
+            await this.userService.create(user);
+            return {code: 201};
+        } catch (err) {
+            Console.Err(err);
+            return {error: 409};
+        }
     }
 
     @RequestMapping({ path: '/user/{id}', method: 'GET'})
