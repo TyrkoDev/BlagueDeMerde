@@ -1,13 +1,9 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Blague de Merde</span>
-    <a mat-menu-item href="/login">
-      <span>Login</span>
+<mat-toolbar color="primary" class="mat-elevation-z6">
+    <a mat-button color="secondary" routerLink="/" style="margin:5px">
+      <span>Blagues de Merde</span>
     </a>
-    <a mat-menu-item href="/">
-      <span>Dashboard</span>
+    <a mat-button color="secondary" routerLink="/login" style="margin:5px">
+      Login
     </a>
-  </mat-toolbar-row>
 </mat-toolbar>
 <router-outlet></router-outlet>

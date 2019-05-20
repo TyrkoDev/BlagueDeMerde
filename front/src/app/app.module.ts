@@ -6,8 +6,12 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {RouterModule, Routes} from '@angular/router';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material';
+import {MatIconModule,
+   MatButtonModule,
+   MatToolbarModule,
+   MatInputModule,
+   MatTableModule,
+   MatFormFieldModule} from '@angular/material';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -25,7 +29,11 @@ const routes: Routes = [
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
     MatToolbarModule,
-    MatIconModule
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    MatTableModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

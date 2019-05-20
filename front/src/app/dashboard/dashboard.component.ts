@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  dataSource = [{
+    position: 1,
+    name: 'Driss',
+    points: 7
+  }];
+  team = {
+    name: 'Distrib'
+  };
+
+  displayedColumns: string[] = ['position', 'name', 'points'];
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }
