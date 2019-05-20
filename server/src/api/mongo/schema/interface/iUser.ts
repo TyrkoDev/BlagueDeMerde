@@ -1,4 +1,3 @@
-import {ITeam} from './iTeam';
 import {InterfaceDTO} from '../../../core/interface/InterfaceDTO';
 
 export interface IUser extends InterfaceDTO {
@@ -7,5 +6,5 @@ export interface IUser extends InterfaceDTO {
     password: string;
     email: string;
     pseudo: string;
-    team: ITeam[];
+    team: string[];
 }

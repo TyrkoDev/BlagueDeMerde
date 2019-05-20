@@ -1,4 +1,4 @@
-import {Body, Console, Controller, RequestMapping} from 'tsunamy/core';
+import {Body, Controller, RequestMapping, Response, Console} from 'tsunamy/core';
 import {AuthenticateService} from './authenticate.service';
 import {ControllerTemplate} from '../core/controller/controllerTemplate';
 import {AuthenticateEntity} from './models/authenticate-entity';
@@ -16,7 +16,14 @@ export class AuthenticateController extends ControllerTemplate {
     }
 
     @RequestMapping({ path: '/authenticate', method: 'POST'})
-    async authentication(@Body() authenticateEntity: AuthenticateEntity) {
-        return {error: 403, message: 'Une erreur est survenue !'};
+    async authentication(@Response() res: any, @Body() authenticateEntity: AuthenticateEntity) {
+        try {
+            const token = await this.authenticateService.authentication(authenticateEntity);
+            res.setHeader('authorization', 'Bearer ' + token);
+            return {code: 200};
+        } catch (e) {
+            Console.Err(e);
+            return {error: 403};
+        }
     }
 }
