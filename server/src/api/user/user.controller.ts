@@ -17,13 +17,7 @@ export class UserController extends ControllerTemplate {
 
     @RequestMapping({ path: '/user/create', method: 'POST'})
     async create(@Body() user: IUser) {
-        try {
-            await this.userService.create(user);
-            return {code: 201};
-        } catch (err) {
-            Console.Err(err);
-            return {error: 409};
-        }
+        return await this.userService.create(user);
     }
 
     @RequestMapping({ path: '/user/{id}', method: 'GET'})
