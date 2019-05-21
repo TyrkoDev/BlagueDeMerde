@@ -32,7 +32,7 @@ export class AuthenticateService {
             throw new Error('User ' + authenticateEntity.login + ' not found');
         }
 
-        const isSame = this.comparePassword(authenticateEntity.password, userFind.password);
+        const isSame = await this.comparePassword(authenticateEntity.password, userFind.password);
 
         if (isSame) {
             try {
