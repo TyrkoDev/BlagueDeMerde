@@ -44,15 +44,17 @@ export class UserService {
         return {code: 201};
     }
 
-    async update(user: IUser): Promise<IUserModel | void> {
-        return await User.updateOne({email: user.email}, user).then((res: IUserModel) => {
+    async update(user: IUser): Promise<ResponseEntity> {
+        const updateUser =  await User.updateOne({email: user.email}, user).then((res: IUserModel) => {
             Console.Info('User updated : ' + res.pseudo);
             return res;
         }).catch(reason => Console.Err(reason));
+
+        return updateUser === undefined ? {error: 500} : {code: 200};
     }
 
-    async getUser(id: any): Promise<IUserModel | null> {
-        return await User.findById(id, function(err, res) {
+    async getUser(id: any): Promise<ResponseEntity> {
+        const userById = await User.findById(id, function(err, res) {
             if (err) {
                 Console.Err('User not found : ' + id);
             }
@@ -62,10 +64,12 @@ export class UserService {
             }
             return res;
         });
+
+        return userById === undefined ? {error: 500} : {code: 200, value: userById};
     }
 
-    async getUsersByIdTeam(idTeam: any): Promise<IUserModel[] | null> {
-        return await User.find({idTeam}, function(err: any, res: any[]) {
+    async getUsersByIdTeam(idTeam: any): Promise<ResponseEntity> {
+        const userByIdTeam = await User.find({idTeam}, function(err: any, res: any[]) {
             if (err) {
                 Console.Err('Team users not found : ' + idTeam);
             }
@@ -75,13 +79,17 @@ export class UserService {
             }
             return res;
         });
+
+        return userByIdTeam === undefined ? {error: 500} : {code: 200, value: userByIdTeam};
     }
 
-    async delete(id: string): Promise<DeleteWriteOpResultObject['result']> {
-        return await User.deleteOne({_id: id}, function(err: any) {
+    async delete(id: string): Promise<ResponseEntity> {
+        const deleted: any = await User.deleteOne({_id: id}, function(err: any) {
             if (err) {
                 Console.Err('User not found : ' + id);
             }
         });
+
+        return deleted.ok === 1 ? {code: 202} : {code: 500};
     }
 }

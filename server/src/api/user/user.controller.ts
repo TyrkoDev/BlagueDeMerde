@@ -22,21 +22,21 @@ export class UserController extends ControllerTemplate {
 
     @RequestMapping({ path: '/user/{id}', method: 'GET'})
     async getUser(@PathParam('id') id: any) {
-        return {user: await this.userService.getUser(id)};
+        return await this.userService.getUser(id);
     }
 
     @RequestMapping({ path: '/user/users/{id-team}', method: 'GET'})
     async getUsers(@PathParam('id-team') idTeam: any) {
-        return {users: await this.userService.getUsersByIdTeam(idTeam)};
+        return await this.userService.getUsersByIdTeam(idTeam);
     }
 
     @RequestMapping({ path: '/user/update', method: 'PUT'})
     async update(@Body() user: IUser) {
-        return {success: await this.userService.update(user)};
+        return await this.userService.update(user);
     }
 
     @RequestMapping({ path: '/user/delete/{id}', method: 'DELETE'})
     async delete(@PathParam('id') id: any) {
-        return {success: await this.userService.delete(id)};
+        return await this.userService.delete(id);
     }
 }
