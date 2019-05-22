@@ -17,17 +17,16 @@ export class TeamController extends ControllerTemplate {
 
     @RequestMapping({ path: '/team/create', method: 'POST'})
     async create(@Body() team: ITeam) {
-        await this.teamService.create(team);
-        return {code: 201};
+        return await this.teamService.create(team);
     }
 
     @RequestMapping({ path: '/team/{id}', method: 'GET'})
     async getTeam(@PathParam('id') id: any) {
-        return {team: await this.teamService.getTeam(id)};
+        return await this.teamService.getTeam(id);
     }
 
     @RequestMapping({ path: '/team/delete/{id}', method: 'DELETE'})
     async delete(@PathParam('id') id: any) {
-        return {success: await this.teamService.delete(id)};
+        return await this.teamService.delete(id);
     }
 }
