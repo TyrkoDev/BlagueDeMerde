@@ -1,15 +1,15 @@
 <br/><br/>
-<form class="example-form" style="margin: auto;">
+<div class="example-form" style="margin: auto;">
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Email" value="">
+    <input matInput placeholder="Email" value="" [(ngModel)]="name">
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input type="password" matInput placeholder="Mot de passe" value="">
+    <input type="password" matInput placeholder="Mot de passe" value="" [(ngModel)]="password">
   </mat-form-field>
 
-<button mat-raised-button color="primary" routerLink="/">Login</button>
+<button mat-raised-button color="primary" (click)="login()">Login</button>
 Don't have Login, you can <a routerLink="/register" >Register</a>.
 
-</form>
+</div>

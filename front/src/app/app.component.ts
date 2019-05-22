@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {UserService} from './shared/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'blagueDeMerde';
-  user = { name: 'Driss'};
+  user = null;
+
+  constructor(private userService: UserService,
+              private router: Router) {
+      userService.subjectUser.subscribe( (user) => {
+          this.user = user;
+      });
+  }
+
+  logout() {
+    this.userService.setCurrentUser(null);
+    this.router.navigateByUrl('/login');
+  }
+
 }

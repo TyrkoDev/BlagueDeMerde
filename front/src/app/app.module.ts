@@ -17,10 +17,18 @@ import {MatIconModule,
    MatExpansionModule,
    MatOptionModule,
    MatSelectModule,
+   MatMenuModule,
    MatFormFieldModule} from '@angular/material';
+import {LoginService} from './login/login.service';
+import {UserService} from './shared/user.service';
+import {TeamService} from './shared/team.service';
+import {IsSignedInGuard} from './shared/isSignedIn.guard';
 
 const routes: Routes = [
-    { path: '', component: DashboardComponent },
+    { path: '', component: DashboardComponent,
+        canActivate: [
+            IsSignedInGuard
+        ] },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent }
 ];
@@ -46,9 +54,14 @@ const routes: Routes = [
     MatExpansionModule,
     MatOptionModule,
     MatSelectModule,
+    MatMenuModule,
     MatFormFieldModule
   ],
-  providers: [],
+  providers: [
+      LoginService,
+      TeamService,
+      UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

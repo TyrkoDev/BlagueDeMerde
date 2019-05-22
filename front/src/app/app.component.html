@@ -1,13 +1,12 @@
-<mat-toolbar color="primary" class="mat-elevation-z6">
+<mat-toolbar color="primary" class="mat-elevation-z6" *ngIf="user">
     <a mat-button color="secondary" routerLink="/" style="margin:5px">
       <span>Blagues de Merde</span>
     </a>
-    <a mat-button color="secondary" routerLink="/login" style="margin:5px">
-      Login
-    </a>
     <span class="example-spacer"></span>
-    <a mat-button color="secondary" style="margin:5px">
-      {{user.name}}
-    </a>
+    <button mat-button [matMenuTriggerFor]="menu" color="secondary" style="margin:5px">{{user?.name}}</button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item  (click)="logout()">Logout</button>
+    </mat-menu>
+
 </mat-toolbar>
 <router-outlet></router-outlet>
