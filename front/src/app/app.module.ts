@@ -5,7 +5,9 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TeamComponent } from './dashboard/team/team.component';
 import {RouterModule, Routes} from '@angular/router';
 import {MatIconModule,
    MatButtonModule,
@@ -19,14 +21,17 @@ import {MatIconModule,
 
 const routes: Routes = [
     { path: '', component: DashboardComponent },
-    { path: 'login', component: LoginComponent }
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    RegisterComponent,
+    TeamComponent
   ],
   imports: [
     BrowserModule,
