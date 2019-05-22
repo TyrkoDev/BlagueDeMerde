@@ -12,6 +12,38 @@ export class AuthenticateService {
     constructor() {
     }
 
+    static async isAuthenticate(request: any): Promise<boolean> {
+        const token = request.headers.authorization;
+        if (token && token.startsWith('Bearer ')) {
+            const hash = token.substr(7);
+            let result: string[] = [];
+            try {
+                const filePath = path.join(__dirname, '../../certificate/secretKey.txt');
+                const key = fs.readFileSync(filePath, 'utf8');
+                jwt.verify(hash, key, (err: any, decoded: any) => {
+                    if (err) {
+                        Console.Err(err);
+                        throw new Error('Erreur lors de la vérification du token');
+                    }
+                    result = decoded.data.split('/');
+                });
+            } catch (e) {
+                Console.Err(e);
+                return false;
+            }
+
+            const userFind = await User.findOne().or([{name: result[0]}, {pseudo: result[1]}])
+                .where('createdAt').equals(result[2])
+                .then((resp: IUserModel | null) => resp)
+                .catch((err: any) => Console.Err(err));
+
+            return !!userFind;
+        } else {
+            return false;
+        }
+    }
+
+
     static async hashPassword(password: string): Promise<string | void> {
         Console.Info('Hash du mot de passe');
         return await argon2.hash(password, {hashLength: 50, timeCost: 5})
@@ -38,7 +70,10 @@ export class AuthenticateService {
             try {
                 const filePath = path.join(__dirname, '../../certificate/secretKey.txt');
                 const key = fs.readFileSync(filePath, 'utf8');
-                return jwt.sign({data: userFind.pseudo + userFind.email + userFind.createdAt}, key, { algorithm: 'HS512', expiresIn: '1h'});
+                return jwt.sign(
+                    {data: userFind.pseudo + '/' + userFind.email + '/' + userFind.createdAt},
+                    key,
+                    { algorithm: 'HS512', expiresIn: '1h'});
             } catch (e) {
                 Console.Err(e);
                 throw new Error('Erreur lors de la generation du token');
