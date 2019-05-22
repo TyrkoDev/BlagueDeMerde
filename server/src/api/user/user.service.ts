@@ -1,7 +1,6 @@
 import {Console, Injectable} from 'tsunamy/core';
 import {IUser} from '../mongo/schema/interface/iUser';
 import {IUserModel, User} from '../mongo/schema/user';
-import {DeleteWriteOpResultObject} from 'mongodb';
 import {AuthenticateService} from '../authenticate/authenticate.service';
 import {ResponseEntity} from '../core/interface/responseEntity';
 
@@ -65,7 +64,7 @@ export class UserService {
             return res;
         });
 
-        return userById === undefined ? {error: 500} : {code: 200, value: userById};
+        return userById === undefined ? {error: 204} : {code: 200, value: userById};
     }
 
     async getUsersByIdTeam(idTeam: any): Promise<ResponseEntity> {
@@ -80,7 +79,7 @@ export class UserService {
             return res;
         });
 
-        return userByIdTeam === undefined ? {error: 500} : {code: 200, value: userByIdTeam};
+        return userByIdTeam === undefined ? {error: 404} : {code: 200, value: userByIdTeam};
     }
 
     async delete(id: string): Promise<ResponseEntity> {

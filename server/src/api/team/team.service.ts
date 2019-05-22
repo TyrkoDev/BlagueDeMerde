@@ -39,7 +39,7 @@ export class TeamService {
             return res;
         });
 
-        return teamById === undefined ? {error: 500} : {code: 200, value: teamById};
+        return teamById === undefined ? {error: 204} : {code: 200, value: teamById};
     }
 
     async delete(id: string): Promise<ResponseEntity> {

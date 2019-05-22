@@ -1,9 +1,10 @@
 import {Document, Schema, Model, model} from 'mongoose';
 import {Console} from 'tsunamy/core';
 import {IVote} from './interface/iVote';
+import {ITeam} from './interface/iTeam';
+import {ITeamModel, Team} from './team';
 
 export interface IVoteModel extends IVote, Document {
-    hello(): string;
     vote(): void;
 }
 
@@ -12,12 +13,6 @@ export const VoteSchema: Schema = new Schema({
     targetUser: [{type: Schema.Types.ObjectId, ref: 'User'}],
     dateVote: Date
 });
-
-VoteSchema.methods.hello = function(): string {
-    return ('[' + this.dateVote.toLocaleDateString() + '] : '
-        + this.idVoter + ' a décidé que la blague de '
-        + this.idTargetUser + ' était qualifié de merde');
-};
 
 VoteSchema.methods.vote = function(): void {
     this.save((err: any) => {
