@@ -1,7 +1,6 @@
 import {Console, Injectable} from 'tsunamy/core';
 import {IVote} from '../mongo/schema/interface/iVote';
 import {IVoteModel, Vote} from '../mongo/schema/vote';
-import {DeleteWriteOpResultObject} from 'mongodb';
 import {ResponseEntity} from '../core/interface/responseEntity';
 
 @Injectable()

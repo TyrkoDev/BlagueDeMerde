@@ -15,7 +15,7 @@ export class AuthenticateController extends ControllerTemplate {
         return super.hi();
     }
 
-    @Guards(AuthenticateService.isAuthenticate)
+    // @Guards(AuthenticateService.isAuthenticate)
     @RequestMapping({ path: '/authenticate', method: 'POST'})
     async authentication(@Response() res: any, @Body() authenticateEntity: AuthenticateEntity) {
         try {

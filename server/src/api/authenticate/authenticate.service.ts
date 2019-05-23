@@ -13,10 +13,11 @@ export class AuthenticateService {
     }
 
     static async isAuthenticate(request: any): Promise<boolean> {
+        Console.Info('Verification du token');
         const token = request.headers.authorization;
         if (token && token.startsWith('Bearer ')) {
             const hash = token.substr(7);
-            let result: string[] = [];
+            let result: any = null;
             try {
                 const filePath = path.join(__dirname, '../../certificate/secretKey.txt');
                 const key = fs.readFileSync(filePath, 'utf8');
@@ -25,20 +26,21 @@ export class AuthenticateService {
                         Console.Err(err);
                         throw new Error('Erreur lors de la vérification du token');
                     }
-                    result = decoded.data.split('/');
+                    result = decoded;
                 });
             } catch (e) {
                 Console.Err(e);
                 return false;
             }
-
-            const userFind = await User.findOne().or([{name: result[0]}, {pseudo: result[1]}])
-                .where('createdAt').equals(result[2])
+            const userFind = await User.findOne().or([{name: result.pseudo}, {pseudo: result.pseudo}])
+                .where('email').equals(result.email)
+                .where('lastConnection').equals(result.lastConnection)
                 .then((resp: IUserModel | null) => resp)
                 .catch((err: any) => Console.Err(err));
 
             return !!userFind;
         } else {
+            Console.Err('Header authorization vide ou mal formé : ' + token);
             return false;
         }
     }
@@ -67,17 +69,25 @@ export class AuthenticateService {
         const isSame = await this.comparePassword(authenticateEntity.password, userFind.password);
 
         if (isSame) {
+            const date = new Date().toISOString();
+            let tokenGenerated = null;
             try {
                 const filePath = path.join(__dirname, '../../certificate/secretKey.txt');
                 const key = fs.readFileSync(filePath, 'utf8');
-                return jwt.sign(
-                    {data: userFind.pseudo + '/' + userFind.email + '/' + userFind.createdAt},
-                    key,
-                    { algorithm: 'HS512', expiresIn: '1h'});
+                tokenGenerated = jwt.sign(
+                                {
+                                    pseudo: userFind.pseudo,
+                                    mail: userFind.email,
+                                    lastConnection: date
+                                },
+                                key,
+                                { algorithm: 'HS512', expiresIn: '1h'});
             } catch (e) {
                 Console.Err(e);
                 throw new Error('Erreur lors de la generation du token');
             }
+            await User.updateOne({_id: userFind._id}, {lastConnection: date});
+            return tokenGenerated;
         } else {
             throw new Error('Password not valid');
         }

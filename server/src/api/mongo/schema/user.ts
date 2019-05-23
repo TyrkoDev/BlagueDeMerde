@@ -10,6 +10,7 @@ export interface IUserModel extends IUser, Document {
 
 export const UserSchema: Schema = new Schema({
     createdAt: { type: Date, default: Date.now },
+    lastConnection: { type: Date, default: null },
     name: String,
     firstName: String,
     password: String,

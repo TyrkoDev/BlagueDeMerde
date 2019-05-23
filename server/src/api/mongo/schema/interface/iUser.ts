@@ -1,6 +1,4 @@
-import {InterfaceDTO} from '../../../core/interface/InterfaceDTO';
-
-export interface IUser extends InterfaceDTO {
+export interface IUser {
     name: string;
     firstName: string;
     password: string;
