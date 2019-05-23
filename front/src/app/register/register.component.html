@@ -2,17 +2,25 @@
 <form class="example-form" style="margin: auto;">
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Nom" value="">
+    <input matInput placeholder="Nom" name="name" [(ngModel)]="name">
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Email" value="">
+    <input matInput placeholder="Prenom" name="firstName" [(ngModel)]="firstName">
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <input type="password" matInput placeholder="Mot de passe" value="">
+    <input matInput placeholder="Email" name="email" [(ngModel)]="email">
   </mat-form-field>
 
-  <button mat-raised-button color="primary" routerLink="/login">Register</button>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Pseudo" name="pseudo" [(ngModel)]="pseudo">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <input type="password" matInput placeholder="Mot de passe" name="password" [(ngModel)]="password">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="register()">Register</button>
 
 </form>

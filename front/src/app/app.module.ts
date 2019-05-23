@@ -23,6 +23,7 @@ import {LoginService} from './login/login.service';
 import {UserService} from './shared/user.service';
 import {TeamService} from './shared/team.service';
 import {IsSignedInGuard} from './shared/isSignedIn.guard';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent,
@@ -55,12 +56,14 @@ const routes: Routes = [
     MatOptionModule,
     MatSelectModule,
     MatMenuModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    HttpClientModule
   ],
   providers: [
       LoginService,
       TeamService,
-      UserService
+      UserService,
+      HttpClient
   ],
   bootstrap: [AppComponent]
 })
