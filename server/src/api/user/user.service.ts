@@ -43,6 +43,19 @@ export class UserService {
         return {code: 201};
     }
 
+    async checkPseudoOrMailExist(info: string): Promise<ResponseEntity> {
+        // check if pseudo or mail already exist
+        Console.Info('Check if pseudo or mail already exist');
+        const isPresent = await this.user.pseudoOrMailExist(info);
+
+        if (isPresent) {
+            Console.Err('Pseudo or mail already exist');
+            return {error: 409};
+        }
+
+        return {code: 200};
+    }
+
     async update(user: IUser): Promise<ResponseEntity> {
         const updateUser =  await User.updateOne({email: user.email}, user).then((res: IUserModel) => {
             Console.Info('User updated : ' + res.pseudo);

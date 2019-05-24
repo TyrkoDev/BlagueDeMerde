@@ -1,4 +1,4 @@
-import {Body, Controller, RequestMapping, Response, Console, Guards} from 'tsunamy/core';
+import {Body, Console, Controller, RequestMapping, Response} from 'tsunamy/core';
 import {AuthenticateService} from './authenticate.service';
 import {ControllerTemplate} from '../core/controller/controllerTemplate';
 import {AuthenticateEntity} from './models/authenticate-entity';
@@ -6,17 +6,16 @@ import {AuthenticateEntity} from './models/authenticate-entity';
 @Controller()
 export class AuthenticateController extends ControllerTemplate {
 
-    constructor( private authenticateService: AuthenticateService) {
+    constructor(private authenticateService: AuthenticateService) {
         super(AuthenticateController);
     }
 
-    @RequestMapping({ path: '/authenticate/hi', method: 'GET'})
+    @RequestMapping({path: '/authenticate/hi', method: 'GET'})
     hi() {
         return super.hi();
     }
 
-    // @Guards(AuthenticateService.isAuthenticate)
-    @RequestMapping({ path: '/authenticate', method: 'POST'})
+    @RequestMapping({path: '/authenticate', method: 'POST'})
     async authentication(@Response() res: any, @Body() authenticateEntity: AuthenticateEntity) {
         try {
             const token = await this.authenticateService.authentication(authenticateEntity);

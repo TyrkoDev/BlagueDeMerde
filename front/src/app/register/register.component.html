@@ -1,26 +1,56 @@
 <br/><br/>
-<form class="example-form" style="margin: auto;">
+<form class="example-form" [formGroup]="formRegister" (ngSubmit)="register()" style="margin: auto;">
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Nom" name="name" [(ngModel)]="name">
+    <input matInput placeholder="Nom" name="name" formControlName="name">
   </mat-form-field>
+  <mat-error *ngIf="formRegister.get('name').hasError('required') && formRegister.get('name').touched">
+    La saisie de ce champ est obligatoire
+  </mat-error>
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Prenom" name="firstName" [(ngModel)]="firstName">
+    <input matInput placeholder="Prenom" name="firstName" formControlName="firstName">
   </mat-form-field>
+  <mat-error *ngIf="formRegister.get('firstName').hasError('required') && formRegister.get('firstName').touched">
+    La saisie de ce champ est obligatoire
+  </mat-error>
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Email" name="email" [(ngModel)]="email">
+    <input matInput placeholder="Email" name="email" formControlName="email" (blur)="checkMail()">
   </mat-form-field>
+  <mat-hint *ngIf="mailIsOK && formRegister.get('email').valid && mailSearchDone">Email disponible</mat-hint>
+  <mat-error *ngIf="!mailIsOK && formRegister.get('email').valid && mailSearchDone">
+    Email indisponible
+  </mat-error>
+  <mat-error *ngIf="formRegister.get('email').hasError('required') && formRegister.get('email').touched">
+    La saisie de ce champ est obligatoire
+  </mat-error>
+  <mat-error *ngIf="formRegister.get('email').hasError('email') && formRegister.get('email').touched">
+    Le format de l'adresse email est invalide
+  </mat-error>
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Pseudo" name="pseudo" [(ngModel)]="pseudo">
+    <input matInput placeholder="Pseudo" name="pseudo" formControlName="pseudo" (blur)="checkPseudo()">
   </mat-form-field>
+  <mat-hint *ngIf="pseudoIsOK && formRegister.get('pseudo').valid && pseudoSearchDone">Pseudo disponible</mat-hint>
+  <mat-error *ngIf="!pseudoIsOK && formRegister.get('pseudo').valid && pseudoSearchDone">
+    Pseudo indisponible
+  </mat-error>
+  <mat-error *ngIf="formRegister.get('pseudo').hasError('required') && formRegister.get('pseudo').touched">
+    La saisie de ce champ est obligatoire
+  </mat-error>
 
   <mat-form-field class="example-full-width">
-    <input type="password" matInput placeholder="Mot de passe" name="password" [(ngModel)]="password">
+    <input type="password" matInput placeholder="Mot de passe" name="password" formControlName="password">
   </mat-form-field>
+  <mat-error *ngIf="formRegister.get('password').hasError('required') && formRegister.get('password').touched">
+    La saisie de ce champ est obligatoire
+  </mat-error>
+<mat-error *ngIf="formRegister.get('password').hasError('pattern') && formRegister.get('password').touched">
+  Veuillez entrer 8 à 12 caractères alphanumériques uniquement dont au moins 2 alphabétiques et 2 numériques.
+</mat-error>
 
-  <button mat-raised-button color="primary" (click)="register()">Register</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="formRegister.invalid" style="margin-right: 20px">Register</button>
+  <a mat-raised-button href="/login">Retour</a>
 
 </form>

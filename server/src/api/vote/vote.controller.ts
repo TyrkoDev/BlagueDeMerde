@@ -1,36 +1,41 @@
-import {RequestMapping, PathParam, Controller, Body} from 'tsunamy/core';
+import {Body, Controller, Guards, PathParam, RequestMapping} from 'tsunamy/core';
 import {ControllerTemplate} from '../core/controller/controllerTemplate';
 import {IVote} from '../mongo/schema/interface/iVote';
 import {VoteService} from './vote.service';
+import {AuthenticateService} from '../authenticate/authenticate.service';
 
 @Controller()
 export class VoteController extends ControllerTemplate {
 
-    constructor( private voteService: VoteService) {
+    constructor(private voteService: VoteService) {
         super(VoteController);
     }
 
-    @RequestMapping({ path: '/vote/hi', method: 'GET'})
+    @RequestMapping({path: '/vote/hi', method: 'GET'})
     hi() {
         return super.hi();
     }
 
-    @RequestMapping({ path: '/vote', method: 'POST'})
+    @Guards(AuthenticateService.isAuthenticate)
+    @RequestMapping({path: '/vote', method: 'POST'})
     async vote(@Body() vote: IVote) {
         return await this.voteService.vote(vote);
     }
 
-    @RequestMapping({ path: '/vote/{id}', method: 'GET'})
+    @Guards(AuthenticateService.isAuthenticate)
+    @RequestMapping({path: '/vote/{id}', method: 'GET'})
     async getVote(@PathParam('id') id: any) {
         return await this.voteService.getVote(id);
     }
 
-    @RequestMapping({ path: '/vote/votes/{id-voter}', method: 'GET'})
+    @Guards(AuthenticateService.isAuthenticate)
+    @RequestMapping({path: '/vote/votes/{id-voter}', method: 'GET'})
     async getVotes(@PathParam('id-voter') idVoter: any) {
         return await this.voteService.getVotesByIdVoter(idVoter);
     }
 
-    @RequestMapping({ path: '/vote/delete/{id}', method: 'DELETE'})
+    @Guards(AuthenticateService.isAuthenticate)
+    @RequestMapping({path: '/vote/delete/{id}', method: 'DELETE'})
     async delete(@PathParam('id') id: any) {
         return await this.voteService.delete(id);
     }
