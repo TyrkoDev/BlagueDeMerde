@@ -1,18 +1,24 @@
 <br/><br/>
-<div class="example-form" style="margin: auto;">
+<form class="example-form" [formGroup]="loginForm" (ngSubmit)="login()" style="margin: auto;">
 
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Email" value="" [(ngModel)]="name">
+    <input matInput placeholder="Pseudo ou Email" formControlName="login">
   </mat-form-field>
+  <mat-error *ngIf="loginForm.get('login').hasError('required') && loginForm.get('login').touched">
+    La saisie de ce champ est obligatoire
+  </mat-error>
 
   <mat-form-field class="example-full-width">
-    <input type="password" matInput placeholder="Mot de passe" value="" [(ngModel)]="password">
+    <input type="password" matInput placeholder="Mot de passe" formControlName="password">
   </mat-form-field>
+  <mat-error *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
+    La saisie de ce champ est obligatoire
+  </mat-error>
 
-<button mat-raised-button color="primary" (click)="login()">Login</button>
+<button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
   <br/>
   Don't have Login, you can <a routerLink="/register" >Register</a>.
   <br/>Forget your password ? You're fucked.
 
 
-</div>
+</form>

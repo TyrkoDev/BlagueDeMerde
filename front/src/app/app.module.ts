@@ -21,12 +21,12 @@ import {
     MatTableModule,
     MatToolbarModule
 } from '@angular/material';
-import {LoginService} from './login/login.service';
 import {UserService} from './shared/user.service';
 import {TeamService} from './shared/team.service';
 import {IsSignedInGuard} from './shared/isSignedIn.guard';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
+import {AuthenticateService} from './shared/authenticate.service';
 
 
 const routes: Routes = [
@@ -68,9 +68,9 @@ const routes: Routes = [
         ReactiveFormsModule
     ],
     providers: [
-        LoginService,
         TeamService,
         UserService,
+        AuthenticateService,
         HttpClient
     ],
     bootstrap: [AppComponent]

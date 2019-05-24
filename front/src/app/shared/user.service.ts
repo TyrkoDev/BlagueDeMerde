@@ -19,7 +19,7 @@ export class UserService {
         return this.currentUser;
     }
 
-    setCurrentUser(user: any) {
+    setCurrentUser(user: User) {
         this.currentUser = user;
         this.subjectUser.next(user);
     }

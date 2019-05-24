@@ -1,10 +1,13 @@
 import {Injectable, Console} from 'tsunamy/core';
 import {AuthenticateEntity} from './models/authenticate-entity';
-import * as argon2 from 'argon2';
 import {IUserModel, User} from '../mongo/schema/user';
+import {AuthenticateResponse} from './models/authenticate-response';
+
+import * as argon2 from 'argon2';
 import fs from 'fs';
 import * as path from 'path';
 import * as jwt from 'jsonwebtoken';
+import {IUser} from '../mongo/schema/interface/iUser';
 
 @Injectable()
 export class AuthenticateService {
@@ -57,7 +60,7 @@ export class AuthenticateService {
         return await argon2.verify(hash, password);
     }
 
-    async authentication(authenticateEntity: AuthenticateEntity): Promise<string> {
+    async authentication(authenticateEntity: AuthenticateEntity): Promise<AuthenticateResponse> {
         Console.Info('Recherche du user');
         const userFind = await User.findOne().or([{pseudo: authenticateEntity.login}, {email: authenticateEntity.login}])
             .then((resp: IUserModel | null) => resp);
@@ -87,9 +90,21 @@ export class AuthenticateService {
                 throw new Error('Erreur lors de la generation du token');
             }
             await User.updateOne({_id: userFind._id}, {lastConnection: date});
-            return tokenGenerated;
+            const userFormated = this.formatUser(userFind);
+            return {token: tokenGenerated, userCreated: userFormated};
         } else {
             throw new Error('Password not valid');
         }
+    }
+
+    private formatUser(user: IUserModel): IUser {
+        return {
+            name: user.name,
+            firstName: user.firstName,
+            email: user.email,
+            password: '',
+            pseudo: user.pseudo,
+            team: user.team
+        };
     }
 }
