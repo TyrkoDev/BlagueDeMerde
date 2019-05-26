@@ -3,7 +3,7 @@
       <span>Blagues de Merde</span>
     </a>
     <span class="example-spacer"></span>
-    <button mat-button [matMenuTriggerFor]="menu" color="secondary" style="margin:5px">{{user?.name}}</button>
+    <button mat-button [matMenuTriggerFor]="menu" color="secondary" style="margin:5px">{{user?.pseudo}}</button>
     <mat-menu #menu="matMenu">
         <button mat-menu-item  (click)="logout()">Logout</button>
     </mat-menu>

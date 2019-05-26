@@ -21,12 +21,12 @@ import {
     MatTableModule,
     MatToolbarModule
 } from '@angular/material';
-import {UserService} from './shared/user.service';
-import {TeamService} from './shared/team.service';
+import {UserService} from './shared/user/user.service';
+import {TeamService} from './shared/team/team.service';
 import {IsSignedInGuard} from './shared/isSignedIn.guard';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
-import {AuthenticateService} from './shared/authenticate.service';
+import {AuthenticateService} from './shared/authenticate/authenticate.service';
 
 
 const routes: Routes = [

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
-import {AuthenticateService} from '../shared/authenticate.service';
+import {AuthenticateService} from '../shared/authenticate/authenticate.service';
 import {AuthenticateDTO} from '../shared/model/interface/authenticate-dto';
 import {User} from '../shared/model/interface/user-interface';
-import {UserService} from '../shared/user.service';
+import {UserService} from '../shared/user/user.service';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({

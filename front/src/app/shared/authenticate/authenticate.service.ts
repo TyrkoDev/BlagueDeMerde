@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
-import {User} from './model/interface/user-interface';
+import {User} from '../model/interface/user-interface';
 import {HttpClient} from '@angular/common/http';
-import {AuthenticateDTO} from './model/interface/authenticate-dto';
+import {AuthenticateDTO} from '../model/interface/authenticate-dto';
 
 @Injectable({
   providedIn: 'root'
