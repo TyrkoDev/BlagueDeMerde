@@ -11,18 +11,14 @@ export class TeamService {
   constructor(private http: HttpClient) { }
 
   createTeam(team: TeamInterface): Observable<any> {
-    return this.http.post<any>('http://127.0.0.1:8088/api/team/all', team);
+    return this.http.post<any>('http://127.0.0.1:8088/api/team/create', team);
   }
 
-  getTeam(id: string): Observable<TeamInterface> {
-    return this.http.get<TeamInterface>('http://127.0.0.1:8088/api/team/' + id);
+  becomeTeamMember(idTeam: string, idUser: string): Observable<any> {
+    return this.http.put<any>('http://127.0.0.1:8088/api/team/join/team/' + idTeam + '/user/' + idUser, null);
   }
 
-  getTeams(): Observable<TeamInterface> {
-    return this.http.get<TeamInterface>('http://127.0.0.1:8088/api/team/all');
-  }
-
-  deleteTeam(id: string): Observable<any> {
+  deleteTeamById(id: string): Observable<any> {
     return this.http.delete<any>('http://127.0.0.1:8088/api/team/delete/' + id);
   }
 }

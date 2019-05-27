@@ -3,9 +3,9 @@ import {Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AuthenticateService} from '../shared/authenticate/authenticate.service';
 import {AuthenticateDTO} from '../shared/model/interface/authenticate-dto';
-import {User} from '../shared/model/interface/user-interface';
 import {UserService} from '../shared/user/user.service';
 import {ToastrService} from 'ngx-toastr';
+import {UserEntity} from '../shared/model/entity/user-entity';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   login() {
     const authenticateDTO: AuthenticateDTO = {login: this.loginForm.get('login').value, password: this.loginForm.get('password').value};
     this.authenticateService.authenticate(authenticateDTO).subscribe(
-        (user: User) => {
+        (user: UserEntity) => {
           this.userService.setCurrentUser(user);
           this.router.navigateByUrl('/');
         },

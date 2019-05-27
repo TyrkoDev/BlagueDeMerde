@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../model/interface/user-interface';
+import {UserEntity} from '../model/entity/user-entity';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import {User} from '../model/interface/user-interface';
 })
 export class UserService {
 
-    currentUser = null;
+    currentUser: UserEntity = null;
     subjectUser = new BehaviorSubject(null);
 
     constructor(private http: HttpClient) {
@@ -19,7 +20,7 @@ export class UserService {
         return this.currentUser;
     }
 
-    setCurrentUser(user: User) {
+    setCurrentUser(user: UserEntity) {
         this.currentUser = user;
         this.subjectUser.next(user);
     }

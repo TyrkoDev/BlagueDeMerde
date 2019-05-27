@@ -29,6 +29,13 @@ export class TeamController extends ControllerTemplate {
     }
 
     @Guards(AuthenticateService.isAuthenticate)
+    @RequestMapping({path: '/team/join/team/{idTeam}/user/{idUser}', method: 'PUT'})
+    async becomeTeamMember(@PathParam('idTeam') idTeam: string,
+                           @PathParam('idUser') idUser: string) {
+        return await this.teamService.becomeTeamMember(idTeam, idUser);
+    }
+
+    @Guards(AuthenticateService.isAuthenticate)
     @RequestMapping({path: '/team/delete/{id}', method: 'DELETE'})
     async delete(@PathParam('id') id: any) {
         return await this.teamService.delete(id);
