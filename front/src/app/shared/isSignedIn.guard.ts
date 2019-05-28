@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {UserService} from './user/user.service';
+import {AuthenticateService} from './authenticate/authenticate.service';
 
 @Injectable({
     providedIn: 'root'
@@ -8,11 +8,11 @@ import {UserService} from './user/user.service';
 export class IsSignedInGuard implements CanActivate {
 
     constructor(private router: Router,
-                private userService: UserService) {
+                private authenticateService: AuthenticateService) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        const isLogin = this.userService.getCurrentUser() !== null;
+        const isLogin = this.authenticateService.getCurrentUser() !== null;
         if (!isLogin) {
             this.router.navigateByUrl('/login');
         }

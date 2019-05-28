@@ -18,8 +18,7 @@
   <mat-form-field class="example-full-width">
     <input matInput placeholder="Email" name="email" formControlName="email" (blur)="checkMail()">
   </mat-form-field>
-  <mat-hint *ngIf="mailIsOK && formRegister.get('email').valid && mailSearchDone">Email disponible</mat-hint>
-  <mat-error *ngIf="!mailIsOK && formRegister.get('email').valid && mailSearchDone">
+  <mat-error *ngIf="formRegister.get('email').hasError('notAvailable')">
     Email indisponible
   </mat-error>
   <mat-error *ngIf="formRegister.get('email').hasError('required') && formRegister.get('email').touched">
@@ -32,12 +31,14 @@
   <mat-form-field class="example-full-width">
     <input matInput placeholder="Pseudo" name="pseudo" formControlName="pseudo" (blur)="checkPseudo()">
   </mat-form-field>
-  <mat-hint *ngIf="pseudoIsOK && formRegister.get('pseudo').valid && pseudoSearchDone">Pseudo disponible</mat-hint>
-  <mat-error *ngIf="!pseudoIsOK && formRegister.get('pseudo').valid && pseudoSearchDone">
+  <mat-error *ngIf="formRegister.get('pseudo').hasError('notAvailable')">
     Pseudo indisponible
   </mat-error>
   <mat-error *ngIf="formRegister.get('pseudo').hasError('required') && formRegister.get('pseudo').touched">
     La saisie de ce champ est obligatoire
+  </mat-error>
+  <mat-error *ngIf="formRegister.get('pseudo').hasError('pattern') && formRegister.get('pseudo').touched">
+    Veuillez saisir 3 caractères minimum sans espace
   </mat-error>
 
   <mat-form-field class="example-full-width">
@@ -47,7 +48,7 @@
     La saisie de ce champ est obligatoire
   </mat-error>
 <mat-error *ngIf="formRegister.get('password').hasError('pattern') && formRegister.get('password').touched">
-  Veuillez entrer 8 à 12 caractères alphanumériques uniquement dont au moins 2 alphabétiques et 2 numériques.
+  Veuillez saisir 8 à 12 caractères alphanumériques uniquement dont au moins 2 alphabétiques et 2 numériques
 </mat-error>
 
   <button mat-raised-button color="primary" type="submit" [disabled]="formRegister.invalid" style="margin-right: 20px">Register</button>

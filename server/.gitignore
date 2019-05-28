@@ -8,4 +8,3 @@ src/certificate/*
 !src/certificate/.gitkeep
 
 src/public/*
-!src/public/.gitkeep

@@ -1,25 +1,32 @@
-import { Component } from '@angular/core';
-import {UserService} from './shared/user/user.service';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {AuthenticateService} from './shared/authenticate/authenticate.service';
+import {UserEntity} from './shared/model/entity/user-entity';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'blagueDeMerde';
-  user = null;
+  user: UserEntity;
 
-  constructor(private userService: UserService,
+  constructor(private authenticateService: AuthenticateService,
               private router: Router) {
-      userService.subjectUser.subscribe( (user) => {
-          this.user = user;
+    authenticateService.subjectUser.subscribe((user: UserEntity) => {
+        this.user = user;
       });
   }
 
+  ngOnInit(): void {
+    if (!this.user) {
+      this.user = this.authenticateService.getCurrentUser();
+    }
+  }
+
   logout() {
-    this.userService.setCurrentUser(null);
+    this.authenticateService.logout();
     this.router.navigateByUrl('/login');
   }
 

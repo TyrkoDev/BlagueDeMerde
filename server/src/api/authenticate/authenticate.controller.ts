@@ -18,12 +18,10 @@ export class AuthenticateController extends ControllerTemplate {
     @RequestMapping({path: '/authenticate', method: 'POST'})
     async authentication(@Response() res: any, @Body() authenticateEntity: AuthenticateEntity) {
         try {
-            const authenticateResponse = await this.authenticateService.authentication(authenticateEntity);
-            res.setHeader('authorization', 'Bearer ' + authenticateResponse.token);
-            return authenticateResponse.userCreated;
+            return await this.authenticateService.authentication(authenticateEntity);
         } catch (e) {
             Console.Err(e);
-            return {error: 403};
+            return {error: 401};
         }
     }
 }

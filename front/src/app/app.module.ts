@@ -24,9 +24,11 @@ import {
 import {UserService} from './shared/user/user.service';
 import {TeamService} from './shared/team/team.service';
 import {IsSignedInGuard} from './shared/isSignedIn.guard';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
 import {AuthenticateService} from './shared/authenticate/authenticate.service';
+import {ErrorInterceptor} from './shared/interceptors/errorInterceptor';
+import {TokenInterceptor} from './shared/interceptors/tokenInterceptor';
 
 
 const routes: Routes = [
@@ -37,7 +39,8 @@ const routes: Routes = [
         ]
     },
     {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent}
+    {path: 'register', component: RegisterComponent},
+    {path: '**', redirectTo: ''}
 ];
 
 @NgModule({
@@ -71,7 +74,9 @@ const routes: Routes = [
         TeamService,
         UserService,
         AuthenticateService,
-        HttpClient
+        HttpClient,
+        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
     ],
     bootstrap: [AppComponent]
 })

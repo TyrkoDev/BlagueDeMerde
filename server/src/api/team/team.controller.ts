@@ -40,4 +40,10 @@ export class TeamController extends ControllerTemplate {
     async delete(@PathParam('id') id: any) {
         return await this.teamService.delete(id);
     }
+
+    @Guards(AuthenticateService.isAuthenticate)
+    @RequestMapping({path: '/team/check/{name}', method: 'GET'})
+    async checkTeamName(@PathParam('name') name: string) {
+        return await this.teamService.checkTeamNameExist(name);
+    }
 }

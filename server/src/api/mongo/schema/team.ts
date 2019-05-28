@@ -3,7 +3,7 @@ import {ITeam} from './interface/iTeam';
 import {Console} from 'tsunamy/core';
 
 export interface ITeamModel extends ITeam, Document {
-    teamExist(team: ITeam): Promise<boolean>;
+    teamExist(teamName: string): Promise<boolean>;
 }
 
 export const TeamSchema: Schema = new Schema({
@@ -15,8 +15,8 @@ export const TeamSchema: Schema = new Schema({
     }
 });
 
-TeamSchema.methods.teamExist = async function(team: ITeam): Promise<boolean> {
-    const teamFind = await Team.findOne().or([{name: team.name}])
+TeamSchema.methods.teamExist = async function(teamName: string): Promise<boolean> {
+    const teamFind = await Team.findOne().or([{name: teamName}])
         .then((resp: ITeamModel | null) => resp)
         .catch((err: any) => Console.Err(err));
 

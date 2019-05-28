@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AuthenticateService} from '../shared/authenticate/authenticate.service';
 import {AuthenticateDTO} from '../shared/model/interface/authenticate-dto';
 import {UserService} from '../shared/user/user.service';
 import {ToastrService} from 'ngx-toastr';
-import {UserEntity} from '../shared/model/entity/user-entity';
+import {AuthenticateResponse} from '../shared/model/interface/authenticate-response';
 
 @Component({
   selector: 'app-login',
@@ -32,8 +32,8 @@ export class LoginComponent implements OnInit {
   login() {
     const authenticateDTO: AuthenticateDTO = {login: this.loginForm.get('login').value, password: this.loginForm.get('password').value};
     this.authenticateService.authenticate(authenticateDTO).subscribe(
-        (user: UserEntity) => {
-          this.userService.setCurrentUser(user);
+        (response: AuthenticateResponse) => {
+          this.authenticateService.setAuthenticate(response);
           this.router.navigateByUrl('/');
         },
         () => {

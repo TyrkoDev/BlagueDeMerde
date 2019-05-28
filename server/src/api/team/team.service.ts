@@ -15,7 +15,7 @@ export class TeamService {
 
     async create(team: ITeam): Promise<ResponseEntity> {
         Console.Info('Check if team already exist');
-        const isPresent = await this.team.teamExist(team);
+        const isPresent = await this.team.teamExist(team.name);
 
         if (isPresent) {
             Console.Err('Team already exist');
@@ -64,5 +64,16 @@ export class TeamService {
         });
 
         return deleted.ok === 1 ? {code: 202} : {code: 500};
+    }
+
+    async checkTeamNameExist(name: string): Promise<ResponseEntity> {
+        Console.Info('Check if team ' + name + ' already exist');
+        const isPresent = await this.team.teamExist(name);
+
+        if (isPresent) {
+            Console.Err('Team already exist');
+            return {error: 409};
+        }
+        return {code: 200};
     }
 }

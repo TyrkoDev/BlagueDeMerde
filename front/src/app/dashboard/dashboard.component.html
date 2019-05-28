@@ -1,21 +1,28 @@
 <br/><br/>
 <ng-container *ngFor="let team of teams">
-  <app-team [team]="team" (removeTeamEvent)="removeTeamEvent($event)"></app-team>
+    <app-team [team]="team" (removeTeamEvent)="removeTeamEvent($event)"></app-team>
 </ng-container>
 
 <br/>
 <mat-accordion class="example-headers-align">
-  <mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        New Team
-      </mat-panel-title>
-    </mat-expansion-panel-header>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                New Team
+            </mat-panel-title>
+        </mat-expansion-panel-header>
 
-    <mat-form-field >
-      <input type="text" matInput placeholder="Team name" [(ngModel)]="newTeamName" value="">
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="addTeam()">Add team</button>
+        <form [formGroup]="formTeam" (ngSubmit)="addTeam()">
 
-  </mat-expansion-panel>
+            <mat-form-field>
+                <input type="text" matInput placeholder="Team name" formControlName="teamName" (blur)="checkIfTeamNameExist()">
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="formTeam.invalid">Add team</button>
+            <mat-error *ngIf="formTeam.get('teamName').hasError('notAvailable')">
+                Nom de team indisponible
+            </mat-error>
+
+        </form>
+    </mat-expansion-panel>
 </mat-accordion>
+

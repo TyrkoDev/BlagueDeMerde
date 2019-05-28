@@ -21,4 +21,8 @@ export class TeamService {
   deleteTeamById(id: string): Observable<any> {
     return this.http.delete<any>('http://127.0.0.1:8088/api/team/delete/' + id);
   }
+
+  checkTeamName(name: string): Observable<any> {
+    return this.http.get<any>('http://127.0.0.1:8088/api/team/check/' + name);
+  }
 }

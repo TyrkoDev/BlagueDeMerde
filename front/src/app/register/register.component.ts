@@ -12,27 +12,18 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class RegisterComponent implements OnInit {
     formRegister;
-    pseudoIsOK: boolean;
-    mailIsOK: boolean;
-    mailSearchDone: boolean;
-    pseudoSearchDone: boolean;
 
     constructor(private router: Router,
                 private userService: UserService,
                 private formBuilder: FormBuilder,
-                private toastr: ToastrService) {
-        this.pseudoIsOK = true;
-        this.mailIsOK = true;
-        this.mailSearchDone = false;
-        this.pseudoSearchDone = false;
-    }
+                private toastr: ToastrService) {}
 
     ngOnInit() {
         this.formRegister = this.formBuilder.group({
             name: ['', [Validators.required]],
             firstName: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
-            pseudo: ['', [Validators.required]],
+            pseudo: ['', [Validators.required, Validators.pattern('^([a-zA-Z0-9-_]{3,})$')]],
             password: ['', [Validators.required, Validators.pattern('^(?=^.{8,12}$)(?=(.*[a-zA-Z]){2})(?=(.*[0-9]){2}).*$')]]
         });
     }
@@ -58,15 +49,12 @@ export class RegisterComponent implements OnInit {
 
     checkPseudo() {
         if (this.formRegister.get('pseudo').valid) {
-            this.pseudoSearchDone = false;
-            this.userService.checkPseudo(this.formRegister.get('pseudo').value).subscribe(
+            this.userService.checkPseudoOrMail(this.formRegister.get('pseudo').value).subscribe(
                 () => {
-                    this.pseudoIsOK = true;
-                    this.pseudoSearchDone = true;
+                    this.formRegister.get('pseudo').setErrors(null);
                 },
                 () => {
-                    this.pseudoIsOK = false;
-                    this.pseudoSearchDone = true;
+                    this.formRegister.get('pseudo').setErrors({'notAvailable': true});
                 }
             );
         }
@@ -74,15 +62,12 @@ export class RegisterComponent implements OnInit {
 
     checkMail() {
         if (this.formRegister.get('email').valid) {
-            this.mailSearchDone = false;
-            this.userService.checkMail(this.formRegister.get('email').value).subscribe(
+            this.userService.checkPseudoOrMail(this.formRegister.get('email').value).subscribe(
                 () => {
-                    this.mailIsOK = true;
-                    this.mailSearchDone = true;
+                    this.formRegister.get('email').setErrors(null);
                 },
                 () => {
-                    this.mailIsOK = false;
-                    this.mailSearchDone = true;
+                    this.formRegister.get('email').setErrors({'notAvailable': true});
                 }
             );
         }
