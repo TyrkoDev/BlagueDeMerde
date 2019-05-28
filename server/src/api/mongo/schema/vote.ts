@@ -6,6 +6,7 @@ export interface IVoteModel extends IVote, Document {
 }
 
 export const VoteSchema: Schema = new Schema({
+    idTeam: {type: Schema.Types.ObjectId, ref: 'Team'},
     idVoter: {type: Schema.Types.ObjectId, ref: 'User'},
     idTargetUser: {type: Schema.Types.ObjectId, ref: 'User'},
     dateVote: {type: Date, default: Date.now()}
