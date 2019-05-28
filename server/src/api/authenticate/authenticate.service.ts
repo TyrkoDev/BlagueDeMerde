@@ -99,6 +99,7 @@ export class AuthenticateService {
 
     private formatUser(user: IUserModel): IUser {
         return {
+            id: user._id,
             name: user.name,
             firstName: user.firstName,
             email: user.email,

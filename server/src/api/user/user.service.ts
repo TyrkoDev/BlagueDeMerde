@@ -62,7 +62,7 @@ export class UserService {
             return res;
         }).catch(reason => Console.Err(reason));
 
-        return updateUser === undefined ? {error: 500} : {code: 204};
+        return updateUser === undefined ? {error: 500} : {code: 200};
     }
 
     async getUser(id: any): Promise<ResponseEntity> {

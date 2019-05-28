@@ -1,6 +1,5 @@
 import {Document, Model, model, Schema} from 'mongoose';
 import {IUser} from './interface/iUser';
-import {Team} from './team';
 import {Console} from 'tsunamy/core';
 
 export interface IUserModel extends IUser, Document {

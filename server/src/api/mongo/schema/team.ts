@@ -8,7 +8,11 @@ export interface ITeamModel extends ITeam, Document {
 
 export const TeamSchema: Schema = new Schema({
     createdAt: { type: Date, default: Date.now },
-    name: String
+    name: String,
+    admin: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 TeamSchema.methods.teamExist = async function(team: ITeam): Promise<boolean> {

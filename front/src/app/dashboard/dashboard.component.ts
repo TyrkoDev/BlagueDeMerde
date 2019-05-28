@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
   }
 
   becomeTeamMember(idTeam: string) {
-      this.teamService.becomeTeamMember(idTeam, this.user._id).subscribe((response: any) => {
+      this.teamService.becomeTeamMember(idTeam, this.user.id).subscribe((response: any) => {
         console.log(response.code);
       });
   }
