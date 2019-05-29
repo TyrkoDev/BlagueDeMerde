@@ -1,3 +1,4 @@
-export interface TeamInterface {
+export interface Team {
     name: string;
+    admin: string;
 }

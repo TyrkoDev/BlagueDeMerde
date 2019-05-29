@@ -35,29 +35,36 @@ export class DashboardComponent implements OnInit {
         });
     }
 
-    addTeam() {
-        const team: TeamInterface = {name: this.formTeam.get('teamName').value};
-        this.teamService.createTeam(team).subscribe(
-            (result: any) => {
-                this.user.team.push(result);
-                this.teams.push({
-                    name: this.formTeam.get('teamName').value,
-                    members: [{
-                        position: 1,
-                        name: this.user.pseudo,
-                        points: 0
-                    }]
-                });
-                this.toastService.success(
-                    'Création de la team ' + this.formTeam.get('teamName').value + '.',
-                    'Création team'
-                );
-            },
-            () => {
-                this.toastService.error('Une erreur est survenue, veuillez réessayer plus tard.', 'Création team');
-            }
-        );
-    }
+  addTeam() {
+    this.teamService.createTeam({name: this.newTeamName, admin: this.user.id}).subscribe((result: any) => {
+      this.user.team.push(result);
+      console.log(this.user);
+    });
+
+    this.teams.push({ name: this.newTeamName, members: [] });
+    this.newTeamName = '';
+    // const team: TeamInterface = {name: this.formTeam.get('teamName').value};
+    // this.teamService.createTeam(team).subscribe(
+    //   (result: any) => {
+    //       this.user.team.push(result);
+    //       this.teams.push({
+    //           name: this.formTeam.get('teamName').value,
+    //           members: [{
+    //               position: 1,
+    //               name: this.user.pseudo,
+    //               points: 0
+    //           }]
+    //       });
+    //       this.toastService.success(
+    //           'Création de la team ' + this.formTeam.get('teamName').value + '.',
+    //           'Création team'
+    //       );
+    //   },
+    //   () => {
+    //       this.toastService.error('Une erreur est survenue, veuillez réessayer plus tard.', 'Création team');
+    //   }
+    // );
+  }
 
     becomeTeamMember(idTeam: string) {
         this.teamService.becomeTeamMember(idTeam, this.user.id).subscribe((response: any) => {

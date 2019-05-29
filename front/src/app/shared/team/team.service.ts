@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TeamInterface} from '../model/interface/team-interface';
+import {Team} from '../model/interface/team-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class TeamService {
 
   constructor(private http: HttpClient) { }
 
-  createTeam(team: TeamInterface): Observable<any> {
+  createTeam(team: Team): Observable<any> {
     return this.http.post<any>('http://127.0.0.1:8088/api/team/create', team);
   }
 
