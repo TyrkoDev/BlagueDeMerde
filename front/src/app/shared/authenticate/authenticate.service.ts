@@ -1,17 +1,15 @@
 import {Injectable} from '@angular/core';
 import {Observable, BehaviorSubject} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
 import {AuthenticateDTO} from '../model/interface/authenticate-dto';
 import {AuthenticateResponse} from '../model/interface/authenticate-response';
 import {UserEntity} from '../model/entity/user-entity';
+import {ServiceClass} from '../model/class/service-class';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticateService {
+export class AuthenticateService extends ServiceClass {
     subjectUser: BehaviorSubject<UserEntity> = new BehaviorSubject(null);
-
-    constructor(private http: HttpClient) {}
 
     logout() {
         this.subjectUser.next(null);
@@ -40,7 +38,7 @@ export class AuthenticateService {
     }
 
     authenticate(authenticateEntity: AuthenticateDTO): Observable<AuthenticateResponse> {
-        return this.http.post<AuthenticateResponse>('http://127.0.0.1:8088/api/authenticate', authenticateEntity);
+        return this.post('http://127.0.0.1:8088/api/authenticate', authenticateEntity);
     }
 
     private getAuthenticate(): AuthenticateResponse {
