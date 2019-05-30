@@ -33,9 +33,9 @@ export class UserController extends ControllerTemplate {
     }
 
     @Guards(AuthenticateService.isAuthenticate)
-    @RequestMapping({path: '/user/users/{id-team}', method: 'GET'})
-    async getUsers(@PathParam('id-team') idTeam: any) {
-        return await this.userService.getUsersByIdTeam(idTeam);
+    @RequestMapping({path: '/user/team/{id-team}', method: 'GET'})
+    async getUsersFromTeam(@PathParam('id-team') idTeam: any) {
+        return await this.userService.getUsersFromTeam(idTeam);
     }
 
     @Guards(AuthenticateService.isAuthenticate)

@@ -5,6 +5,7 @@ import {AuthenticateService} from '../shared/authenticate/authenticate.service';
 import {ToastrService} from 'ngx-toastr';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Team} from '../shared/model/interface/team-interface';
+import {TeamClass} from '../shared/model/class/team-class';
 
 @Component({
     selector: 'app-dashboard',
@@ -15,7 +16,7 @@ export class DashboardComponent implements OnInit {
 
     private user: UserEntity;
     formTeam;
-    teams = [];
+    teams: TeamClass[];
 
     constructor(private teamService: TeamService,
                 private authenticateService: AuthenticateService,
@@ -42,6 +43,7 @@ export class DashboardComponent implements OnInit {
           this.user.team.push(result);
           this.teams.push({
               name: this.formTeam.get('teamName').value,
+              admin: this.user,
               members: [{
                   position: 1,
                   name: this.user.pseudo,

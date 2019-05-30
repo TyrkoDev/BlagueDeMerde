@@ -29,7 +29,12 @@ export class TeamService {
             })
             .catch(reason => Console.Err(reason));
 
-        return {code: 201, value: teamCreated};
+        if (teamCreated) {
+            await this.becomeTeamMember(teamCreated._id, teamCreated.admin);
+            return {code: 201, value: teamCreated};
+        }
+
+        return {error: 500};
     }
 
     async getTeam(id: any): Promise<ResponseEntity> {

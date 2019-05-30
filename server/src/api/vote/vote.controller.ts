@@ -31,7 +31,7 @@ export class VoteController extends ControllerTemplate {
     @Guards(AuthenticateService.isAuthenticate)
     @RequestMapping({path: '/vote/votes/{id-voter}', method: 'GET'})
     async getVotes(@PathParam('id-voter') idVoter: any) {
-        return await this.voteService.getVotesByIdVoter(idVoter);
+        return await this.voteService.getVotesGivenByIdVoter(idVoter);
     }
 
     @Guards(AuthenticateService.isAuthenticate)
