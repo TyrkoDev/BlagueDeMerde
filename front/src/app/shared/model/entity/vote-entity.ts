@@ -1,5 +1,5 @@
-import {User} from '../interface/user-interface';
+import {Vote} from '../interface/vote-interface';
 
-export interface UserEntity extends User {
+export interface VoteEntity extends Vote {
     id: string;
 }

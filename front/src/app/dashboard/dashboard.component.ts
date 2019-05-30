@@ -6,6 +6,11 @@ import {ToastrService} from 'ngx-toastr';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Team} from '../shared/model/interface/team-interface';
 import {TeamClass} from '../shared/model/class/team-class';
+import {MemberService} from '../shared/member/member.service';
+import {Member} from '../shared/model/interface/member-interface';
+import {UserService} from '../shared/user/user.service';
+import {User} from '../shared/model/interface/user-interface';
+import {ResponseEntity} from '../shared/model/entity/response-entity';
 
 @Component({
     selector: 'app-dashboard',
@@ -16,9 +21,11 @@ export class DashboardComponent implements OnInit {
 
     private user: UserEntity;
     formTeam;
-    teams: TeamClass[];
+    teams: TeamClass[] = [];
 
     constructor(private teamService: TeamService,
+                private memberService: MemberService,
+                private userService: UserService,
                 private authenticateService: AuthenticateService,
                 private toastService: ToastrService,
                 private formBuilder: FormBuilder) {
@@ -34,6 +41,16 @@ export class DashboardComponent implements OnInit {
         this.formTeam = this.formBuilder.group({
             teamName: ['', [Validators.required]]
         });
+
+        this.user.team.forEach(idTeam => {
+            this.teamService.getTeam(idTeam).subscribe((team: ResponseEntity<Team>) => {
+                this.memberService.getTeamMembers(idTeam).subscribe((members: ResponseEntity<Member[]>) => {
+                    this.userService.getUser(team.value.admin).subscribe((user: ResponseEntity<User>) => {
+                        this.teams.push(new TeamClass(team.value.name, user.value, members.value));
+                    });
+                });
+            });
+        });
     }
 
   addTeam() {
@@ -47,7 +64,8 @@ export class DashboardComponent implements OnInit {
               members: [{
                   position: 1,
                   name: this.user.pseudo,
-                  points: 0
+                  points: 0,
+                  votes: []
               }]
           });
           this.toastService.success(

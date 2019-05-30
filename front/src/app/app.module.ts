@@ -29,6 +29,8 @@ import {ToastrModule} from 'ngx-toastr';
 import {AuthenticateService} from './shared/authenticate/authenticate.service';
 import {ErrorInterceptor} from './shared/interceptors/errorInterceptor';
 import {TokenInterceptor} from './shared/interceptors/tokenInterceptor';
+import {MemberService} from './shared/member/member.service';
+import {RequestService} from './shared/request/request.service';
 
 
 const routes: Routes = [
@@ -74,6 +76,8 @@ const routes: Routes = [
         TeamService,
         UserService,
         AuthenticateService,
+        MemberService,
+        RequestService,
         HttpClient,
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}

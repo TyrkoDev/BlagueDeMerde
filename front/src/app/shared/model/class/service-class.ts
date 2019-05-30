@@ -1,8 +1,9 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {ResponseEntity} from '../entity/response-entity';
 
 export class ServiceClass {
-    protected readonly BASE_URL = 'http://127.0.0.1/api';
+    protected readonly BASE_URL = 'http://127.0.0.1:8088/api';
 
     constructor(protected httpClient: HttpClient) {
 
@@ -23,7 +24,7 @@ export class ServiceClass {
     }
 
     protected post(url: string, body: any): Observable<any> {
-        return this.httpClient.post(url, body, this.constructHeaders());
+        return this.httpClient.post<any>(url, body, this.constructHeaders());
     }
 
     protected get(url: string): Observable<any> {

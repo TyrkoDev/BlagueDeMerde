@@ -2,11 +2,16 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {RequestTeam} from '../model/interface/request-interface';
 import {ServiceClass} from '../model/class/service-class';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RequestService extends ServiceClass {
+
+    constructor(protected httpClient: HttpClient) {
+        super(httpClient);
+    }
 
     askToJoin(request: RequestTeam): Observable<any> {
         return this.post('http://127.0.0.1:8088/api/request', request);
