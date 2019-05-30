@@ -1,12 +1,9 @@
-import {Console, Injectable} from 'tsunamy/core';
-import {IUser} from '../mongo/schema/interface/iUser';
-import {IUserModel, User} from '../mongo/schema/user';
-import {AuthenticateService} from '../authenticate/authenticate.service';
+import {Injectable} from 'tsunamy/core';
+import {IUserModel} from '../mongo/schema/user';
 import {ResponseEntity} from '../core/interface/responseEntity';
 import {UserService} from '../user/user.service';
 import {MemberDto} from '../core/dto/member-dto';
 import {VoteService} from '../vote/vote.service';
-import {IVoteModel} from '../mongo/schema/vote';
 
 @Injectable()
 export class MemberService {
@@ -19,17 +16,25 @@ export class MemberService {
     async getMembersFromTeam(idTeam: any): Promise<ResponseEntity> {
         const userByIdTeam: ResponseEntity = await this.userService.getUsersFromTeam(idTeam);
         const users: IUserModel[] = userByIdTeam.value;
-
-        const members = await users.map(async user => {
-            const votes: ResponseEntity = await this.voteService.getVotesTakenByIdVoter(user._id);
-            const member: MemberDto = {
-                name: user.pseudo,
-                points: votes.value.length
-            };
-
-            return member;
+        const members = await this.mapMembers(users, idTeam);
+        return Promise.all(members).then((members: MemberDto[]) => {
+            members.sort((memberA, memberB) => memberA.points < memberB.points ? 1 : 0);
+            members.forEach((member, index) => member.position = (index + 1));
+            return members.length === 0 ? {error: 404} : {code: 200, value: members};
         });
+    }
 
-        return members.length === 0 ? {error: 404} : {code: 200, value: members};
+    private mapMembers(users: IUserModel[], idTeam: any): Promise<MemberDto>[] {
+        return users.map(async user => {
+            return await this.voteService.getVotesTakenByIdVoter(user._id, idTeam).then(votes =>{
+                const member: MemberDto = {
+                    position: 0,
+                    name: user.pseudo,
+                    points: votes.value.length,
+                    votes: votes.value
+                };
+                return member;
+            });
+        });
     }
 }

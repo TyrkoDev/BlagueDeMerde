@@ -25,8 +25,8 @@ export class VoteService {
         return voteById === undefined ? {error: 404} : {code: 200, value: voteById};
     }
 
-    async getVotesGivenByIdVoter(idVoter: any): Promise<ResponseEntity> {
-        const votes = await Vote.find({idVoter}, function(err: any, res: any[]) {
+    async getVotesGivenByIdVoter(idVoter: any, idTeam: any): Promise<ResponseEntity> {
+        const votes = await Vote.find({idVoter, idTeam}, function(err: any, res: any[]) {
             if (err) {
                 Console.Err('Voter not found : ' + idVoter);
             }
@@ -40,8 +40,8 @@ export class VoteService {
         return votes === undefined ? {error: 404} : {code: 200, value: votes};
     }
 
-    async getVotesTakenByIdVoter(idTargetUser: any): Promise<ResponseEntity> {
-        const votes = await Vote.find({idTargetUser: idTargetUser}, function(err: any, res: any[]) {
+    async getVotesTakenByIdVoter(idTargetUser: any, idTeam: any): Promise<ResponseEntity> {
+        const votes = await Vote.find({idTargetUser: idTargetUser, idTeam: idTeam}, function(err: any, res: any[]) {
             if (err) {
                 Console.Err('Voter not found : ' + idTargetUser);
             }

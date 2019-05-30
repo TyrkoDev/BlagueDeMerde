@@ -29,9 +29,9 @@ export class VoteController extends ControllerTemplate {
     }
 
     @Guards(AuthenticateService.isAuthenticate)
-    @RequestMapping({path: '/vote/votes/{id-voter}', method: 'GET'})
-    async getVotes(@PathParam('id-voter') idVoter: any) {
-        return await this.voteService.getVotesGivenByIdVoter(idVoter);
+    @RequestMapping({path: '/vote/votes/{id-voter}/team/{id-team}', method: 'GET'})
+    async getVotesGivenInTeam(@PathParam('id-voter') idVoter: any, @PathParam('id-team') idTeam: any) {
+        return await this.voteService.getVotesGivenByIdVoter(idVoter, idTeam);
     }
 
     @Guards(AuthenticateService.isAuthenticate)
