@@ -7,6 +7,7 @@ import { TeamModule } from './team/team.module';
 import { VoteModule } from './vote/vote.module';
 import { AuthenticateModule } from './authenticate/authenticate.module';
 import { MemberModule } from './member/member.module';
+import { RequestModule } from './request/request.module';
 
 @TyModule({
   declarations: [AppController],
@@ -17,7 +18,8 @@ import { MemberModule } from './member/member.module';
       TeamModule,
       VoteModule,
       AuthenticateModule,
-      MemberModule
+      MemberModule,
+      RequestModule
   ]
 })
 export class AppModule { }

@@ -37,6 +37,21 @@ export class TeamService {
         return {error: 500};
     }
 
+    async getEveryTeam(): Promise<ResponseEntity> {
+        const teams = await Team.find({}, function(err, res) {
+            if (err) {
+                Console.Err('Something went wrong :(');
+            }
+
+            if (res) {
+                Console.Info('Team total : ' + res.length);
+            }
+            return res;
+        });
+
+        return teams === undefined ? {error: 404} : {code: 200, value: teams};
+    }
+
     async getTeam(id: any): Promise<ResponseEntity> {
         const teamById = await Team.findById(id, function(err, res) {
             if (err) {

@@ -3,7 +3,7 @@ import {IRequest} from './interface/iRequest';
 import {Console} from 'tsunamy/core';
 
 export interface IRequestModel extends IRequest, Document {
-    askToJoin(request: IRequest): Promise<boolean>;
+    alreadyAsked(request: IRequest): Promise<boolean>;
 }
 
 export const RequestTeamSchema: Schema = new Schema({

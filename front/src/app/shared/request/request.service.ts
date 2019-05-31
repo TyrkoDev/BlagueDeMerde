@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {RequestTeam} from '../model/interface/request-interface';
 import {ServiceClass} from '../model/class/service-class';
 import {HttpClient} from '@angular/common/http';
+import {ResponseEntity} from '../model/entity/response-entity';
 
 @Injectable({
     providedIn: 'root'
@@ -13,19 +14,19 @@ export class RequestService extends ServiceClass {
         super(httpClient);
     }
 
-    askToJoin(request: RequestTeam): Observable<any> {
-        return this.post('http://127.0.0.1:8088/api/request', request);
+    askToJoin(request: RequestTeam): Observable<ResponseEntity<any>> {
+        return this.post(this.BASE_URL + '/request', request);
     }
 
-    getRequestByIdUser(idUser: string): Observable<any> {
-        return this.get('http://127.0.0.1:8088/api/request/user/' + idUser);
+    getRequestByIdUser(idUser: string): Observable<ResponseEntity<any>> {
+        return this.get(this.BASE_URL + '/request/user/' + idUser);
     }
 
-    getRequestByIdTeam(idTeam: string): Observable<any> {
-        return this.get('http://127.0.0.1:8088/api/request/team/' + idTeam);
+    getRequestByIdTeam(idTeam: string): Observable<ResponseEntity<any>> {
+        return this.get(this.BASE_URL + '/request/team/' + idTeam);
     }
 
-    deleteRequestById(id: string): Observable<any> {
-        return this.delete('http://127.0.0.1:8088/api/request/delete/' + id);
+    deleteRequestById(id: string): Observable<ResponseEntity<any>> {
+        return this.delete(this.BASE_URL + '/api/request/delete/' + id);
     }
 }

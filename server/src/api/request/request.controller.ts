@@ -18,7 +18,7 @@ export class RequestController extends ControllerTemplate {
 
     @Guards(AuthenticateService.isAuthenticate)
     @RequestMapping({path: '/request', method: 'POST'})
-    async vote(@Body() request: IRequest) {
+    async request(@Body() request: IRequest) {
         return await this.requestService.askToJoin(request);
     }
 

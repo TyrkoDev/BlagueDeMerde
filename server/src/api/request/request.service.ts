@@ -14,10 +14,10 @@ export class RequestService {
     async askToJoin(request: IRequest): Promise<ResponseEntity> {
         // check if user already exist
         Console.Info('Check if request already exist');
-        const isPresent = await this.request.askToJoin(request);
+        const isPresent = await this.request.alreadyAsked(request);
 
         if (isPresent) {
-            Console.Err('User already exist');
+            Console.Err('Request already exist');
             return {error: 409};
         }
 

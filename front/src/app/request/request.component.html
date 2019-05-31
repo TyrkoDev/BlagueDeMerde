@@ -1,0 +1,15 @@
+<h1>Request</h1>
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+        <input type="text" placeholder="Search" aria-label="Search" matInput (keyup)="filter($event)">
+    </mat-form-field>
+</form>
+
+<mat-list>
+    <mat-list-item *ngFor="let team of teamsFilter">
+        <span matLine>{{team.name}}</span>
+        <button mat-icon-button (click)="join(team._id)">
+            <mat-icon>add</mat-icon>
+        </button>
+    </mat-list-item>
+</mat-list>

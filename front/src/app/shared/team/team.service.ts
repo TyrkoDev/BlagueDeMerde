@@ -4,6 +4,7 @@ import {Team} from '../model/interface/team-interface';
 import {ServiceClass} from '../model/class/service-class';
 import {HttpClient} from '@angular/common/http';
 import {ResponseEntity} from '../model/entity/response-entity';
+import {TeamEntity} from '../model/entity/team-entity';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class TeamService extends ServiceClass {
 
   getTeam(idTeam: string): Observable<ResponseEntity<Team>> {
     return this.get(this.BASE_URL + '/team/' + idTeam);
+  }
+
+  getEveryTeam(): Observable<ResponseEntity<TeamEntity[]>> {
+    return this.get(this.BASE_URL + '/team/teams');
   }
 
   becomeTeamMember(idTeam: string, idUser: string): Observable<any> {

@@ -10,11 +10,13 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {TeamComponent} from './dashboard/team/team.component';
 import {RouterModule, Routes} from '@angular/router';
 import {
+    MatAutocompleteModule,
     MatButtonModule,
     MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatListModule,
     MatMenuModule,
     MatOptionModule,
     MatSelectModule,
@@ -31,6 +33,7 @@ import {ErrorInterceptor} from './shared/interceptors/errorInterceptor';
 import {TokenInterceptor} from './shared/interceptors/tokenInterceptor';
 import {MemberService} from './shared/member/member.service';
 import {RequestService} from './shared/request/request.service';
+import {RequestComponent} from './request/request.component';
 
 
 const routes: Routes = [
@@ -42,6 +45,7 @@ const routes: Routes = [
     },
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
+    {path: 'request', component: RequestComponent},
     {path: '**', redirectTo: ''}
 ];
 
@@ -51,7 +55,8 @@ const routes: Routes = [
         LoginComponent,
         DashboardComponent,
         RegisterComponent,
-        TeamComponent
+        TeamComponent,
+        RequestComponent
     ],
     imports: [
         BrowserModule,
@@ -70,7 +75,9 @@ const routes: Routes = [
         MatMenuModule,
         MatFormFieldModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatListModule,
+        MatAutocompleteModule
     ],
     providers: [
         TeamService,

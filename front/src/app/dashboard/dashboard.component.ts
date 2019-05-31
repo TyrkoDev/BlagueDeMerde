@@ -11,6 +11,7 @@ import {Member} from '../shared/model/interface/member-interface';
 import {UserService} from '../shared/user/user.service';
 import {User} from '../shared/model/interface/user-interface';
 import {ResponseEntity} from '../shared/model/entity/response-entity';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-dashboard',
@@ -27,6 +28,7 @@ export class DashboardComponent implements OnInit {
                 private memberService: MemberService,
                 private userService: UserService,
                 private authenticateService: AuthenticateService,
+                private router: Router,
                 private toastService: ToastrService,
                 private formBuilder: FormBuilder) {
         authenticateService.subjectUser.subscribe((user: UserEntity) => {
@@ -101,5 +103,9 @@ export class DashboardComponent implements OnInit {
                 }
             );
         }
+    }
+
+    redirectJoinTeam(): void {
+        this.router.navigateByUrl('/request');
     }
 }
