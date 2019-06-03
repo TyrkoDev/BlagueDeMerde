@@ -1,28 +1,41 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TeamInterface} from '../model/interface/team-interface';
+import {Team} from '../model/interface/team-interface';
+import {ServiceClass} from '../model/class/service-class';
+import {HttpClient} from '@angular/common/http';
+import {ResponseEntity} from '../model/entity/response-entity';
+import {TeamEntity} from '../model/entity/team-entity';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TeamService {
+export class TeamService extends ServiceClass {
 
-  constructor(private http: HttpClient) { }
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient);
+  }
 
-  createTeam(team: TeamInterface): Observable<any> {
-    return this.http.post<any>('http://127.0.0.1:8088/api/team/create', team);
+  createTeam(team: Team): Observable<any> {
+    return this.post(this.BASE_URL + '/team/create', team);
+  }
+
+  getTeam(idTeam: string): Observable<ResponseEntity<Team>> {
+    return this.get(this.BASE_URL + '/team/' + idTeam);
+  }
+
+  getEveryTeam(): Observable<ResponseEntity<TeamEntity[]>> {
+    return this.get(this.BASE_URL + '/team/teams');
   }
 
   becomeTeamMember(idTeam: string, idUser: string): Observable<any> {
-    return this.http.put<any>('http://127.0.0.1:8088/api/team/join/team/' + idTeam + '/user/' + idUser, null);
+    return this.put(this.BASE_URL + '/team/join/team/' + idTeam + '/user/' + idUser, null);
   }
 
   deleteTeamById(id: string): Observable<any> {
-    return this.http.delete<any>('http://127.0.0.1:8088/api/team/delete/' + id);
+    return this.delete(this.BASE_URL + '/team/delete/' + id);
   }
 
   checkTeamName(name: string): Observable<any> {
-    return this.http.get<any>('http://127.0.0.1:8088/api/team/check/' + name);
+    return this.get(this.BASE_URL + '/team/check/' + name);
   }
 }

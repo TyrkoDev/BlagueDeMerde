@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import {TeamClass} from '../../shared/model/class/team-class';
 
 @Component({
   selector: 'app-team',
@@ -7,7 +8,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 })
 export class TeamComponent implements OnInit {
 
-  @Input() team;
+  @Input() team: TeamClass;
   @Output() removeTeamEvent = new EventEmitter<string>();
   newMemberName = '';
   deleteMemberName;
@@ -23,12 +24,14 @@ export class TeamComponent implements OnInit {
     const index = this.team.members.findIndex( (value) => value.name === element.name);
     this.team.members[index].points = this.team.members[index].points + 1;
   }
+
   addMember() {
     const members = this.team.members.slice();
-    members.push({ name: this.newMemberName, position: 0, points: 0 });
+    // members.push({ name: this.newMemberName, position: 0, points: 0 });
     this.newMemberName = '';
     this.team.members = members;
   }
+
   removeMember() {
     const members = this.team.members.slice();
     const index = this.team.members.findIndex( (value) => value.name === this.deleteMemberName);

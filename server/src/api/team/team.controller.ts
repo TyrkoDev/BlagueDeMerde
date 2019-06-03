@@ -23,6 +23,12 @@ export class TeamController extends ControllerTemplate {
     }
 
     @Guards(AuthenticateService.isAuthenticate)
+    @RequestMapping({path: '/team/teams', method: 'GET'})
+    async getEveryTeam() {
+        return await this.teamService.getEveryTeam();
+    }
+
+    @Guards(AuthenticateService.isAuthenticate)
     @RequestMapping({path: '/team/{id}', method: 'GET'})
     async getTeam(@PathParam('id') id: any) {
         return await this.teamService.getTeam(id);

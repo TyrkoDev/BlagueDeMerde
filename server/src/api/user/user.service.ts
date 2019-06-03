@@ -80,8 +80,8 @@ export class UserService {
         return userById === undefined ? {error: 204} : {code: 200, value: userById};
     }
 
-    async getUsersByIdTeam(idTeam: any): Promise<ResponseEntity> {
-        const userByIdTeam = await User.find({idTeam}, function(err: any, res: any[]) {
+    async getUsersFromTeam(idTeam: any): Promise<ResponseEntity> {
+        const userByIdTeam = await User.find({team: idTeam}, function(err: any, res: any[]) {
             if (err) {
                 Console.Err('Team users not found : ' + idTeam);
             }
