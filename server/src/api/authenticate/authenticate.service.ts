@@ -7,13 +7,9 @@ import * as argon2 from 'argon2';
 import fs from 'fs';
 import * as path from 'path';
 import * as jwt from 'jsonwebtoken';
-import {IUser} from '../mongo/schema/interface/iUser';
 
 @Injectable()
 export class AuthenticateService {
-
-    constructor() {
-    }
 
     static async isAuthenticate(request: any): Promise<boolean> {
         Console.Info('Verification du token');
@@ -35,7 +31,8 @@ export class AuthenticateService {
                 Console.Err(e);
                 return false;
             }
-            const userFind = await User.findOne().or([{name: result.pseudo}, {pseudo: result.pseudo}])
+            const userFind = await User.findOne()
+                .where('pseudo').equals(result.pseudo)
                 .where('email').equals(result.email)
                 .where('lastConnection').equals(result.lastConnection)
                 .then((resp: IUserModel | null) => resp)
@@ -53,11 +50,6 @@ export class AuthenticateService {
         Console.Info('Hash du mot de passe');
         return await argon2.hash(password, {hashLength: 50, timeCost: 5})
             .catch(err => Console.Err('Erreur lors du hash du mot de passe ! ' + err));
-    }
-
-    async comparePassword(password: string, hash: string): Promise<boolean> {
-        Console.Info('Verification du mot de passe');
-        return await argon2.verify(hash, password);
     }
 
     async authentication(authenticateEntity: AuthenticateEntity): Promise<AuthenticateResponse> {
@@ -95,5 +87,10 @@ export class AuthenticateService {
         } else {
             throw new Error('Password not valid');
         }
+    }
+
+    private async comparePassword(password: string, hash: string): Promise<boolean> {
+        Console.Info('Verification du mot de passe');
+        return await argon2.verify(hash, password);
     }
 }

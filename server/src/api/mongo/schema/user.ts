@@ -24,10 +24,6 @@ export const UserSchema: Schema = new Schema({
     }]
 });
 
-UserSchema.methods.hello = function(): string {
-    return (this.firstName.trim() + ' ' + this.name.trim());
-};
-
 UserSchema.methods.userExist = async function(user: IUser): Promise<boolean> {
     const userFind = await User.findOne().or([{pseudo: user.pseudo}, {email: user.email}])
         .then((resp: IUserModel | null) => resp)

@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
 import {RequestService} from '../shared/request/request.service';
 import {TeamService} from '../shared/team/team.service';
 import {ResponseEntity} from '../shared/model/entity/response-entity';
@@ -8,13 +7,14 @@ import {AuthenticateService} from '../shared/authenticate/authenticate.service';
 import {UserEntity} from '../shared/model/entity/user-entity';
 import {ToastrService} from 'ngx-toastr';
 import {RequestTeam} from '../shared/model/interface/request-interface';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
     selector: 'app-request',
     templateUrl: './request.component.html',
     styleUrls: ['./request.component.css']
 })
-export class RequestComponent implements OnInit{
+export class RequestComponent implements OnInit {
     teams: TeamEntity[] = [];
     teamsFilter: TeamEntity[] = [];
     user: UserEntity;
@@ -44,16 +44,14 @@ export class RequestComponent implements OnInit{
             date: new Date()
         };
 
-        this.requestService.askToJoin(request).subscribe((response: ResponseEntity<any>) => {
-                if (response.code === 201) {
-                    this.toastr.success('Votre demande a bien été prise en compte!', 'Request');
-                }
+        this.requestService.askToJoin(request).subscribe(() => {
+                this.toastr.success('Votre demande a bien été prise en compte.', 'Request');
             },
-            (error) => {
-                if (error.code === 409) {
-                    this.toastr.warning('Votre demande a déjà été prise en compte', 'Request');
+            (error: HttpErrorResponse) => {
+                if (error.status === 409) {
+                    this.toastr.warning('Votre demande a déjà été prise en compte.', 'Request');
                 } else {
-                    this.toastr.error('Une erreur est survenue ...', 'Request');
+                    this.toastr.error('Une erreur est survenue, veuillez réessayer plus tard.', 'Request');
                 }
             });
     }
