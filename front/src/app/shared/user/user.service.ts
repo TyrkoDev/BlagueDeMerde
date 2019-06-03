@@ -4,6 +4,7 @@ import {User} from '../model/interface/user-interface';
 import {ServiceClass} from '../model/class/service-class';
 import {HttpClient} from '@angular/common/http';
 import {ResponseEntity} from '../model/entity/response-entity';
+import {UserEntity} from '../model/entity/user-entity';
 
 
 @Injectable({
@@ -15,15 +16,15 @@ export class UserService extends ServiceClass {
         super(httpClient);
     }
 
-    register(user: User): Observable<any> {
+    register(user: User): Observable<ResponseEntity<any>> {
         return this.post(this.BASE_URL + '/user/create', user);
     }
 
-    checkPseudoOrMail(info: string): Observable<any> {
+    checkPseudoOrMail(info: string): Observable<ResponseEntity<any>> {
         return this.get(this.BASE_URL + '/user/check/' + info);
     }
 
-    getUser(idUser: string): Observable<ResponseEntity<User>> {
+    getUser(idUser: string): Observable<ResponseEntity<UserEntity>> {
         return this.get(this.BASE_URL + '/user/' + idUser);
     }
 }

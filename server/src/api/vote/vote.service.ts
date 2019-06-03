@@ -41,7 +41,7 @@ export class VoteService {
     }
 
     async getVotesTakenByIdVoter(idTargetUser: any, idTeam: any): Promise<ResponseEntity> {
-        const votes = await Vote.find({idTargetUser: idTargetUser, idTeam: idTeam}, function(err: any, res: any[]) {
+        const votes = await Vote.find({idTargetUser, idTeam}, function(err: any, res: any[]) {
             if (err) {
                 Console.Err('Voter not found : ' + idTargetUser);
             }

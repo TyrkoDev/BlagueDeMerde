@@ -40,7 +40,7 @@ export class RequestComponent implements OnInit{
     join(id: string): void {
         const request: RequestTeam = {
             idTeam: id,
-            idUser: this.user.id,
+            idUser: this.user._id,
             date: new Date()
         };
 

@@ -19,7 +19,7 @@ export class TeamService extends ServiceClass {
     return this.post(this.BASE_URL + '/team/create', team);
   }
 
-  getTeam(idTeam: string): Observable<ResponseEntity<Team>> {
+  getTeam(idTeam: string): Observable<ResponseEntity<TeamEntity>> {
     return this.get(this.BASE_URL + '/team/' + idTeam);
   }
 

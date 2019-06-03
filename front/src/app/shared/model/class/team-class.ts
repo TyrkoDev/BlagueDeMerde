@@ -1,14 +1,8 @@
 import {User} from '../interface/user-interface';
-import {Member} from '../interface/member-interface';
+import {MemberEntity} from '../entity/member-entity';
 
 export class TeamClass {
-    name: string;
-    admin: User;
-    members: Member[];
 
-    constructor(name: string, admin: User, members: Member[]) {
-        this.name = name;
-        this.admin = admin;
-        this.members = members;
+    constructor(public name: string, public admin: User, public members: MemberEntity[], public _id?: string) {
     }
 }

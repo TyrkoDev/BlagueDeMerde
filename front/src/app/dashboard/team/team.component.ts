@@ -1,5 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import {TeamClass} from '../../shared/model/class/team-class';
+import {VoteService} from '../../shared/vote/vote.service';
+import {Vote} from '../../shared/model/interface/vote-interface';
+import {AuthenticateService} from '../../shared/authenticate/authenticate.service';
+import {UserEntity} from '../../shared/model/entity/user-entity';
+import {ResponseEntity} from '../../shared/model/entity/response-entity';
+import {MemberEntity} from '../../shared/model/entity/member-entity';
 
 @Component({
   selector: 'app-team',
@@ -12,17 +18,33 @@ export class TeamComponent implements OnInit {
   @Output() removeTeamEvent = new EventEmitter<string>();
   newMemberName = '';
   deleteMemberName;
+  user: UserEntity;
 
   displayedColumns: string[] = ['position', 'name', 'points', 'actions'];
 
-  constructor() {
+  constructor(private voteService: VoteService,
+              private authenticateService: AuthenticateService) {
+    this.user = this.authenticateService.getCurrentUser();
   }
 
   ngOnInit() { }
 
-  addPoints(element: any) {
-    const index = this.team.members.findIndex( (value) => value.name === element.name);
-    this.team.members[index].points = this.team.members[index].points + 1;
+  addPoints(member: MemberEntity, team: TeamClass) {
+    const vote: Vote = {
+      idTeam: team._id,
+      idVoter: this.user._id,
+      idTargetUser: member._id,
+      date: new Date()
+    };
+
+    this.voteService.vote(vote).subscribe((response: ResponseEntity<any>) => {
+      console.log('Vote response');
+      this.team.members.forEach(userMember => {
+        if (member._id === userMember._id) {
+          member.points++;
+        }
+      });
+    });
   }
 
   addMember() {

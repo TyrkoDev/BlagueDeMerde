@@ -90,22 +90,10 @@ export class AuthenticateService {
                 throw new Error('Erreur lors de la generation du token');
             }
             await User.updateOne({_id: userFind._id}, {lastConnection: date});
-            const userFormated = this.formatUser(userFind);
-            return {token: tokenGenerated, userCreated: userFormated};
+            userFind.password = '';
+            return {token: tokenGenerated, userCreated: userFind};
         } else {
             throw new Error('Password not valid');
         }
-    }
-
-    private formatUser(user: IUserModel): IUser {
-        return {
-            id: user._id,
-            name: user.name,
-            firstName: user.firstName,
-            email: user.email,
-            password: '',
-            pseudo: user.pseudo,
-            team: user.team
-        };
     }
 }

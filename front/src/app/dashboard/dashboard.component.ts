@@ -1,17 +1,18 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 import {TeamService} from '../shared/team/team.service';
 import {UserEntity} from '../shared/model/entity/user-entity';
 import {AuthenticateService} from '../shared/authenticate/authenticate.service';
-import {ToastrService} from 'ngx-toastr';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Team} from '../shared/model/interface/team-interface';
 import {TeamClass} from '../shared/model/class/team-class';
 import {MemberService} from '../shared/member/member.service';
-import {Member} from '../shared/model/interface/member-interface';
 import {UserService} from '../shared/user/user.service';
 import {User} from '../shared/model/interface/user-interface';
 import {ResponseEntity} from '../shared/model/entity/response-entity';
-import {Router} from '@angular/router';
+import {TeamEntity} from '../shared/model/entity/team-entity';
+import {MemberEntity} from '../shared/model/entity/member-entity';
 
 @Component({
     selector: 'app-dashboard',
@@ -45,10 +46,10 @@ export class DashboardComponent implements OnInit {
         });
 
         this.user.team.forEach(idTeam => {
-            this.teamService.getTeam(idTeam).subscribe((team: ResponseEntity<Team>) => {
-                this.memberService.getTeamMembers(idTeam).subscribe((members: ResponseEntity<Member[]>) => {
+            this.teamService.getTeam(idTeam).subscribe((team: ResponseEntity<TeamEntity>) => {
+                this.memberService.getTeamMembers(idTeam).subscribe((members: ResponseEntity<MemberEntity[]>) => {
                     this.userService.getUser(team.value.admin).subscribe((user: ResponseEntity<User>) => {
-                        this.teams.push(new TeamClass(team.value.name, user.value, members.value));
+                        this.teams.push(new TeamClass(team.value.name, user.value, members.value, team.value._id));
                     });
                 });
             });
@@ -56,7 +57,7 @@ export class DashboardComponent implements OnInit {
     }
 
   addTeam() {
-    const team: Team = {name: this.formTeam.get('teamName').value, admin: this.user.id};
+    const team: Team = {name: this.formTeam.get('teamName').value, admin: this.user._id};
     this.teamService.createTeam(team).subscribe(
       (result: any) => {
           this.user.team.push(result);
@@ -82,7 +83,7 @@ export class DashboardComponent implements OnInit {
   }
 
     becomeTeamMember(idTeam: string) {
-        this.teamService.becomeTeamMember(idTeam, this.user.id).subscribe((response: any) => {
+        this.teamService.becomeTeamMember(idTeam, this.user._id).subscribe((response: any) => {
             console.log(response.code);
         });
     }
