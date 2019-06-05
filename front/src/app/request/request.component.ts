@@ -8,6 +8,9 @@ import {UserEntity} from '../shared/model/entity/user-entity';
 import {ToastrService} from 'ngx-toastr';
 import {RequestTeam} from '../shared/model/interface/request-interface';
 import {HttpErrorResponse} from '@angular/common/http';
+import {RequestEntity} from '../shared/model/entity/request-entity';
+import {RequestClass} from '../shared/model/class/request-class';
+import {UserService} from '../shared/user/user.service';
 
 @Component({
     selector: 'app-request',
@@ -18,8 +21,10 @@ export class RequestComponent implements OnInit {
     teams: TeamEntity[] = [];
     teamsFilter: TeamEntity[] = [];
     user: UserEntity;
+    requests: RequestClass[] = [];
 
     constructor(private requestService: RequestService,
+                private userService: UserService,
                 private teamService: TeamService,
                 private authenticateService: AuthenticateService,
                 private toastr: ToastrService) {
@@ -31,13 +36,32 @@ export class RequestComponent implements OnInit {
             this.teams = teams.value.filter(team => this.user.team.indexOf(team._id) === -1);
             this.teamsFilter = this.teams;
         });
+
+        this.requestService.getRequestByIdUser(this.user._id)
+            .subscribe((requestsResponses: ResponseEntity<RequestEntity[]>) => {
+                    requestsResponses.value.map((requestEntity: RequestEntity) => {
+                        this.userService.getUser(requestEntity.idUser).subscribe((userEntity: ResponseEntity<UserEntity>) => {
+                            this.teamService.getTeam(requestEntity.idTeam).subscribe((teamEntity: ResponseEntity<TeamEntity>) => {
+                                this.requests.push(new RequestClass(userEntity.value, teamEntity.value, requestEntity._id));
+                            });
+                        });
+                    });
+                }, error => console.error('Something went wrong ... ', error)
+        );
     }
 
     filter(event: any) {
         this.teamsFilter = this.teams.filter(team => team.name.indexOf(event.target.value) !== -1);
     }
 
-    join(id: string): void {
+    join(idRequest: string, idTeam: string, idUser: string): void {
+        this.teamService.becomeTeamMember(idTeam, idUser)
+            .subscribe(() => this.requestService.deleteRequestById(idRequest).subscribe(),
+            () => this.toastr.error('Something went wrong :(', 'Join')
+        );
+    }
+
+    askToJoin(id: string): void {
         const request: RequestTeam = {
             idTeam: id,
             idUser: this.user._id,

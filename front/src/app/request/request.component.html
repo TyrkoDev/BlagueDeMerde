@@ -1,4 +1,15 @@
 <h1>Request</h1>
+
+<h3>Ask you to join them !</h3>
+<mat-list>
+    <mat-list-item *ngFor="let request of requests">
+        <span matLine>{{request.team.name}}</span>
+        <button mat-icon-button (click)="join(request._id, request.team._id, request.user._id)">
+            Join
+        </button>
+    </mat-list-item>
+</mat-list>
+
 <form class="example-form">
     <mat-form-field class="example-full-width">
         <input type="text" placeholder="Search" aria-label="Search" matInput (keyup)="filter($event)">
@@ -8,7 +19,7 @@
 <mat-list>
     <mat-list-item *ngFor="let team of teamsFilter">
         <span matLine>{{team.name}}</span>
-        <button mat-icon-button (click)="join(team._id)">
+        <button mat-icon-button (click)="askToJoin(team._id)">
             <mat-icon>add</mat-icon>
         </button>
     </mat-list-item>
