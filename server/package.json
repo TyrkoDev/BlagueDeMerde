@@ -1,7 +1,7 @@
 {
   "name": "blagueDeMerdeBack",
   "version": "0.0.1",
-  "description": "Serveur de l'appli blague de merde",
+  "description": "API de Blague De Merde",
   "main": "main.ts",
   "types": "lib/main",
   "nodemonConfig": {
@@ -46,6 +46,6 @@
     "mongoose": "^5.5.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.4.0",
-    "tsunamy": "0.0.14"
+    "tsunamy": "0.0.15"
   }
 }
