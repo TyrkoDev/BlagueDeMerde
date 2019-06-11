@@ -57,12 +57,12 @@ export class DashboardComponent implements OnInit {
     }
 
   addTeam() {
-    const team: Team = {name: this.formTeam.get('teamName').value, admin: this.user._id};
+    const team: Team = {name: this.formTeam.get('teamName').value.toLowerCase(), admin: this.user._id};
     this.teamService.createTeam(team).subscribe(
       (result: any) => {
           this.user.team.push(result);
           this.teams.push({
-              name: this.formTeam.get('teamName').value,
+              name: this.formTeam.get('teamName').value.toLowerCase(),
               admin: this.user,
               members: [{
                   position: 1,
@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit {
 
     checkIfTeamNameExist() {
         if (this.formTeam.get('teamName').valid) {
-            this.teamService.checkTeamName(this.formTeam.get('teamName').value).subscribe(
+            this.teamService.checkTeamName(this.formTeam.get('teamName').value.toLowerCase()).subscribe(
                 () => {
                     this.formTeam.get('teamName').setErrors(null);
                 },

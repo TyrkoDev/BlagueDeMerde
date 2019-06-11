@@ -54,7 +54,11 @@ export class AuthenticateService {
 
     async authentication(authenticateEntity: AuthenticateEntity): Promise<AuthenticateResponse> {
         Console.Info('Recherche du user');
-        const userFind = await User.findOne().or([{pseudo: authenticateEntity.login}, {email: authenticateEntity.login}])
+        const userFind = await User.findOne()
+            .or([
+                {pseudo: { $regex: authenticateEntity.login, $options: '<i>' }},
+                {email: { $regex: authenticateEntity.login, $options: '<i>' }}
+                ])
             .then((resp: IUserModel | null) => resp);
 
         if (!userFind) {

@@ -38,7 +38,6 @@ export class TeamComponent implements OnInit {
     };
 
     this.voteService.vote(vote).subscribe((response: ResponseEntity<any>) => {
-      console.log('Vote response');
       this.team.members.forEach(userMember => {
         if (member._id === userMember._id) {
           member.points++;

@@ -30,10 +30,10 @@ export class RegisterComponent implements OnInit {
 
     register() {
         const user: User = {
-            name: this.formRegister.get('name').value,
-            firstName: this.formRegister.get('firstName').value,
+            name: this.formRegister.get('name').value.toLowerCase(),
+            firstName: this.formRegister.get('firstName').value.toLowerCase(),
             password: this.formRegister.get('password').value,
-            email: this.formRegister.get('email').value,
+            email: this.formRegister.get('email').value.toLowerCase(),
             pseudo: this.formRegister.get('pseudo').value,
             team: []
         };
@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
 
     checkMail() {
         if (this.formRegister.get('email').valid) {
-            this.userService.checkPseudoOrMail(this.formRegister.get('email').value).subscribe(
+            this.userService.checkPseudoOrMail(this.formRegister.get('email').value.toLowerCase()).subscribe(
                 () => {
                     this.formRegister.get('email').setErrors(null);
                 },

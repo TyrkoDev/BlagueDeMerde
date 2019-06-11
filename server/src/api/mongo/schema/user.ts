@@ -24,8 +24,17 @@ export const UserSchema: Schema = new Schema({
     }]
 });
 
+UserSchema.pre('save', function(next) {
+    const user: any = this;
+    user.name = user.name.toLowerCase();
+    user.firstName = user.firstName.toLowerCase();
+    user.email = user.email.toLowerCase();
+    next();
+});
+
 UserSchema.methods.userExist = async function(user: IUser): Promise<boolean> {
-    const userFind = await User.findOne().or([{pseudo: user.pseudo}, {email: user.email}])
+    const userFind = await User.findOne()
+        .or([{pseudo: { $regex: user.pseudo, $options: '<i>' }}, {email: { $regex: user.email, $options: '<i>' }}])
         .then((resp: IUserModel | null) => resp)
         .catch((err: any) => Console.Err(err));
 
@@ -33,7 +42,8 @@ UserSchema.methods.userExist = async function(user: IUser): Promise<boolean> {
 };
 
 UserSchema.methods.pseudoOrMailExist = async function(info: string): Promise<boolean> {
-    const userFind = await User.findOne().or([{pseudo: info}, {email: info}])
+    const userFind = await User.findOne()
+        .or([{pseudo: { $regex: info, $options: '<i>' }}, {email: { $regex: info, $options: '<i>' }}])
         .then((resp: IUserModel | null) => resp)
         .catch((err: any) => Console.Err(err));
 
