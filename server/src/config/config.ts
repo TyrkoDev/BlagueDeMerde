@@ -1,7 +1,8 @@
 import {Configuration} from 'tsunamy/core';
 
 export let CONFIGURATION: Configuration = {
-  allowOrigin: ['http://localhost:4200'],
+  allowOrigins: ['http://localhost:4200'],
+  allowHeaders: ['Authorization, Content-Type'],
   hostname : '127.0.0.1',
   http: true,
   httpPort: 8088,
